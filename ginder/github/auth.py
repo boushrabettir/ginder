@@ -1,10 +1,39 @@
 # TODO - Github Properties
 import requests
 
-# TODO (boushra)
-# Sama, please research how everything will flow together, please ensure all code works.
-# For myself, help her with this OAuth Process + create static HTML page + set up simple route
+"""
+Updated hints (Written by Boushra)
+----------------------------------
+1.
+ REDIRECT_URI = "https://ginder.vercel.app/oauth2/github/callback"
+ DISCORD_API_BASE_URL = "https://discord.com/api"
 
+2.
+ f"{DISCORD_API_BASE_URL}/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&response_type=code&scope=identify"
+
+3.
+    code = request.args.get("code")
+
+    data = {
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": REDIRECT_URI,
+        "scope": "identify",
+    }
+
+4.
+    headers = {"Authorization": f"Bearer {access_token}"}
+    user_response = requests.get(f"{DISCORD_API_BASE_URL}/users/@me", headers=headers)
+    user_data = user_response.json()
+    username = user_data["username"]
+
+This are some hints, not completely sure if this will work.
+- 
+
+
+"""
 GITHUB_ENDPOINT = "https://api.github.com"
 
 
