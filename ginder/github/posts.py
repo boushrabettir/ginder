@@ -115,7 +115,7 @@ def retrieve_top_repo_languages(repository) -> List[str]:
     return top_languages
 
 
-def request_github_projects(user_languages: List[str]) -> List[OpenSource]:
+def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
     """Requests Github Repository information"""
 
     # Create Open Source Utilizer instance
