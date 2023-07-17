@@ -1,1 +1,1 @@
-# TODO - Imitate an algoerith
+# TODO - Swipe left/right reccomendation
