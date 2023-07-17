@@ -2,7 +2,7 @@
 import requests
 
 """
-Updated hints (Written by Boushra)
+Updated hints (Written by Boushra) - Please view routes.py for reference
 ----------------------------------
 1.
  REDIRECT_URI = "https://ginder.vercel.app/oauth2/github/callback"
