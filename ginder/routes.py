@@ -1,54 +1,43 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, url_for
+import os
+from authlib.integrations.flask_client import OAuth
+import dotenv
 
 app = Flask(__name__)
+oauth = OAuth(app)
+app.secret_key = os.getenv('SECRET_KEY')
 
-# Hold client id
-CLIENT_ID = ""
+github = oauth.register(
+    name = 'github',
+    client_id = os.getenv('CLIENT_ID'),
+    client_secret = os.getenv('CLIENT_SECRET'),
+    access_token_url='https://github.com/login/oauth/access_token', # This is the url that the access token is retrieved from
+    access_token_params=None,
+    authorize_url='https://github.com/login/oauth/authorize', # This is the url that the user is redirected to to authorize the app
+    authorize_params=None,
+    api_base_url='https://api.github.com/', # This is the base url for the github api
+    client_kwargs={'scope': 'user:public_data'} # This is the scope of the data that the app will be able to access
+)
 
+@app.route('/')
+def testing():
+    return 'FRONT PAGE' # this is for testing purposes for now to make sure people are redirected here after logging in
 
-@app.route("/login")
-def login_through_github():
-    redirect_url = f"https://github.com/login/oauth/authorize?client_id={CLIENT_ID}"
-    return redirect(redirect_url, code=302)
+@app.route('/login')
+def github_login():
+    redirect_url = url_for("authorize", _external=True) # This is the url that the user will be redirected to after they authorize the app
+    return github.authorize_redirect(redirect_url) # This redirects the user to the authorization page
 
+@app.route('/callback')
+def authorize():
+    token = github.authorize_access_token() # This gets the access token
+    response = github.get('user', token=token) # This gets the user's information
+    user_profile = response.json() # This converts the user's information to json format
+    print(user_profile, token) # This prints the user's information and the access token
+    return redirect('/') # This redirects the user to the front page of the website
 
-if __name__ == "__main___":
-    app.run()
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)
 
-
-"""
-Another idea - Boushra
-"""
-from flask_github import GitHub
-
-app.config["GITHUB_CLIENT_ID"] = ""
-app.config["GITHUB_CLIENT_SECRET"] = ""
-
-app.config["GITHUB_BASE_URL"] = ""
-app.config["GITHUB_AUTH_URL"] = ""
-
-gh = GitHub(app)
-
-
-@app.route("/login")
-def login_through_github():
-    return gh.authorize()
-
-
-@app.route("/callback")
-@gh.authorized_handler
-def authorization(oauth_token: str):
-    if not oauth_token:
-        print("Failed.")
-        return redirect("/")
-
-    user = User.query.filter_by(github_access_token=oauth_token).first()
-    if not user:
-        pass
-        # Create new user instance (Create User dataclass?)
-        # Add our user to our session
-
-    user.github_access_token = oauth_token
-    # Hold token somewhere
-
-    # Return back to our URL
+# followed this tutorial utilizing authlib to create authentication with flask and github: https://dev.to/nelsoncode/authentication-with-flask-and-github-authlib-19ej
+# this is the documentation for the library: https://docs.authlib.org/en/latest/client/flask.html#routes-for-authorization
