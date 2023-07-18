@@ -1,1 +1,1 @@
-# TODO - Possibily immitate right(like)/left(dislike) algorithm (model) ?
+# TODO - Swipe left/right reccomendation
