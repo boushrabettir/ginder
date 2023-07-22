@@ -139,7 +139,7 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
         if len(open_source_utilizer) / 5 == len(open_source_utilizer) // 5:
             indx += 1
 
-        repositories = gh.search_repositories(query[indx])
+        repositories = gh.search_repositories(f"topic:{query[indx]}")
 
         for repository in repositories:
             open_source_project.id = repository.id
