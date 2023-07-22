@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 import os
 from authlib.integrations.flask_client import OAuth
 import dotenv
@@ -30,14 +30,15 @@ def github_login():
 
 @app.route('/callback')
 def authorize():
-    token = github.authorize_access_token() # This gets the access token
-    response = github.get('user', token=token) # This gets the user's information
+    token = github.authorize_access_token() # This gets the access token to access the user's information to be able to use it in the app
+    response = github.get('user', token=token) # This gets the user's information.
     user_profile = response.json() # This converts the user's information to json format
     print(user_profile, token) # This prints the user's information and the access token
-    return redirect('/') # This redirects the user to the front page of the website
+    return render_template('github.html', user=user_profile) # This renders the github.html template and passes the user's information to it
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
 
 # followed this tutorial utilizing authlib to create authentication with flask and github: https://dev.to/nelsoncode/authentication-with-flask-and-github-authlib-19ej
 # this is the documentation for the library: https://docs.authlib.org/en/latest/client/flask.html#routes-for-authorization
+# https://pygithub.readthedocs.io/en/latest/introduction.html
