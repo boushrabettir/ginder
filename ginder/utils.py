@@ -4,7 +4,7 @@ from github import Auth
 from typing import List
 
 # This is the access token that is used to access the user's information
-auth = Auth.Token('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') # this an example access token
+auth = Auth.Token('token') # this an example access token
 g = Github(auth=auth)
 
 def fetch_token() -> List[str]:
