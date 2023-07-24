@@ -8,7 +8,7 @@ import random
 MAX_LANGUAGE_LENGTH = 3
 
 # Holds the max amount of github projects
-MAX_GH_PROJECT_LENGTH = 15
+MAX_GH_PROJECT_LENGTH = 2
 
 
 @dataclass
@@ -131,26 +131,37 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
     indx = 0
 
     # Continue adding more projects until the list is at max length
-    while len(OpenSourceUtilizer.open_source_list) <= MAX_GH_PROJECT_LENGTH:
-        # Create Open Source instance
-        open_source_project = OpenSource()
-
+    while len(open_source_utilizer.open_source_list) <= MAX_GH_PROJECT_LENGTH:
         # Every language must have 5 projects each within the final list
-        if len(open_source_utilizer) / 5 == len(open_source_utilizer) // 5:
+        if (
+            len(open_source_utilizer.open_source_list) / 5
+            == len(open_source_utilizer.open_source_list) // 5
+        ):
             indx += 1
 
         repositories = gh.search_repositories(f"topic:{query[indx]}")
 
         for repository in repositories:
-            open_source_project.id = repository.id
-            open_source_project.name = repository.name
-            open_source_project.description = repository.description
-            open_source_project.link = repository.html_url
-            open_source_project.owner = repository.owner.login
-            open_source_project.languages = retrieve_top_repo_languages(repository)
-            open_source_project.stars = repository.stargazers_count
+            open_source_project_id = repository.id
+            open_source_project_name = repository.name
+            open_source_project_description = repository.description
+            open_source_project_link = repository.html_url
+            open_source_project_owner = repository.owner.login
+            open_source_project_languages = retrieve_top_repo_languages(repository)
+            open_source_project_stars = repository.stargazers_count
 
-        # Add current object to the finalized list
-        open_source_utilizer.open_source_list.append(open_source_project)
+            # Create Open Source instance
+            open_source_project = OpenSource(
+                open_source_project_id,
+                open_source_project_name,
+                open_source_project_description,
+                open_source_project_link,
+                open_source_project_owner,
+                open_source_project_languages,
+                open_source_project_stars,
+            )
+
+            # Add current object to the finalized list
+            open_source_utilizer.open_source_list.append(open_source_project)
 
     return open_source_utilizer
