@@ -1,27 +1,3 @@
-<<<<<<< Updated upstream
-<script>
-	let responseData;
-  
-	async function fetchData() {
-	  try {
-		const response = await fetch("http://127.0.0.1:5000/get_projects");
-		if (response.ok) {
-		  responseData = await response.json();
-		  console.log(responseData)
-		} else {
-		  console.error("Failed to fetch data:", response.status, response.statusText);
-		}
-	  } catch (error) {
-		console.error("Error fetching data:", error);
-	  }
-	}
-
-	
-  </script>
-  
-  <main>
-	<h1>
-=======
 <script lang="ts">
   let response_data;
 
@@ -45,9 +21,22 @@
   <p>{response_data}</p>
   <button on:click={fetch_gh_data}>Fetch Data</button>
 </main>
->>>>>>> Stashed changes
 
-	  <button on:click={fetchData}>Fetch Data</button>
-	</h1>
-  </main>
-  
+
+<style>
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  .logo.svelte:hover {
+    filter: drop-shadow(0 0 2em #ff3e00aa);
+  }
+  .read-the-docs {
+    color: #888;
+  }
+</style>
