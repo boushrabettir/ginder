@@ -133,11 +133,6 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
     # Continue adding more projects until the list is at max length
     while len(open_source_utilizer.open_source_list) <= MAX_GH_PROJECT_LENGTH:
         # Every language must have 5 projects each within the final list
-        if (
-            len(open_source_utilizer.open_source_list) / 5
-            == len(open_source_utilizer.open_source_list) // 5
-        ):
-            indx += 1
 
         repositories = gh.search_repositories(f"topic:{query[indx]}")
 
@@ -163,5 +158,11 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
 
             # Add current object to the finalized list
             open_source_utilizer.open_source_list.append(open_source_project)
+
+        if (
+            len(open_source_utilizer.open_source_list) / 5
+            == len(open_source_utilizer.open_source_list) // 5
+        ):
+            indx += 1
 
     return open_source_utilizer

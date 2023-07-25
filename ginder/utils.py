@@ -2,9 +2,12 @@
 from github import Github
 from github import Auth
 from typing import List
+from time import sleep
 
 # This is the access token that is used to access the user's information
-auth = Auth.Token("TOKEN")  # this an example access token
+auth = Auth.Token(
+    "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"
+)  # this an example access token
 g = Github(auth=auth)
 
 
