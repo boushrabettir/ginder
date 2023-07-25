@@ -6,7 +6,7 @@ from time import sleep
 
 # This is the access token that is used to access the user's information
 auth = Auth.Token(
-    "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"
+    "token"
 )  # this an example access token
 g = Github(auth=auth)
 
