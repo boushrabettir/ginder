@@ -16,6 +16,10 @@
 
   } 
   */
+
+  import Header from "./lib/Header.svelte";
+  import Footer from "./lib/Footer.svelte";
+  import Post from "./lib/Post.svelte";
 </script>
 
 <main>
@@ -23,17 +27,16 @@
   <p id=response>{response_data}</p>
   <button on:click={fetch_gh_data}>Fetch Data</button>
   -->
-  <p id=footer>Created and maintained by <a href='https://github.com/boushrabettir' target="_blank">boushrabettir</a> and <a href='https://github.com/26samaahmed' target="_blank">26samaahmed</a></p>
-  <h1 id=logo>ginder |</h1>
-  <p id=slogan>Like it? Swipe right. Don’t? Swipe left. It’s that simple.</p>
-  <div id=small-circle></div>
-  <div id=center-block></div>
-  <div id=circle-block></div>
+  <Header />
+
+  <Post />
+
+  <Footer />
 </main>
 
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
   button, 
   #response {
     margin-bottom: 100px;
@@ -124,7 +127,7 @@
   top: 23%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
+} */
 
 </style>
 

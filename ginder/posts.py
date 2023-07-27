@@ -8,7 +8,7 @@ import random
 MAX_LANGUAGE_LENGTH = 3
 
 # Holds the max amount of github projects
-MAX_GH_PROJECT_LENGTH = 2
+MAX_GH_PROJECT_LENGTH = 15
 
 
 @dataclass

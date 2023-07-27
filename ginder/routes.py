@@ -29,8 +29,13 @@ github = oauth.register(
 )
 
 
-# Base route
 @app.route("/")
+def login_page():
+    pass
+
+
+# Base route
+@app.route("/home")
 def base():
     return render_template("index.html")
 

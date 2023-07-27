@@ -1,13 +1,10 @@
-# A function that returns a list of top languages used by the GitHub user
 from github import Github
 from github import Auth
 from typing import List
 from time import sleep
 
 # This is the access token that is used to access the user's information
-auth = Auth.Token(
-    "token"
-)  # this an example access token
+auth = Auth.Token("token")  # this an example access token
 g = Github(auth=auth)
 
 
