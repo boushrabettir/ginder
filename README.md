@@ -9,4 +9,4 @@ foo
 ```
 ---
 
-Made with 💙 by [@boushrabettir](https://github.com/boushrabettir) and [@26samaahmed](https://github.com/26samaahmed)
+Made with 💙 by [@boushrabettir](https://github.com/boushrabettir)
