@@ -10,3 +10,5 @@ foo
 ---
 
 Made with 💙 by [@boushrabettir](https://github.com/boushrabettir)
+
+*Contributions made by [@26samaahmed](https://github.com/26samaahmed)*
