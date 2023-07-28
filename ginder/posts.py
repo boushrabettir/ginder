@@ -108,7 +108,7 @@ def retrieve_top_repo_languages(repository) -> List[str]:
         for indx, (key, value) in enumerate(repository.get_languages().items())
         if indx <= 3
     }
-
+    print(lang_dict)
     # Convert into a list
     top_languages = list(lang_dict.keys())
 
