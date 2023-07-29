@@ -1,13 +1,12 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, jsonify, request
 import os
-from flask import jsonify
 from dotenv import load_dotenv
 from posts import request_github_projects
 from utils import fetch_top_three_languages
 from flask_cors import CORS
 import requests
 from typing import List, Dict
-
+from urllib.parse import parse_qs
 
 # To load the .env file variables
 load_dotenv()
@@ -25,15 +24,22 @@ def get_token() -> List[Dict[str, any]] | str:
     """Retrieves token when fetched by front-end"""
 
     CLIENT_ID: str = os.getenv("CLIENT_ID")
-    REDIRECT_URI: str = os.getenv("REDIRECT_URI")
-    SCOPE: str = os.getenv("SCOPE")
+    CLIENT_SECRET: str = os.getenv("CLIENT_SECRET")
+    code_param: str = request.args.get("code")
 
-    PARAMS: str = f"?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope={SCOPE}"
+    PARAMS: str = f"?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&code={code_param}&scope=read:user,repo"
 
-    response = requests.get(f"https://github.com/login/oauth/authorize{PARAMS}")
+    response = requests.get(f"https://github.com/login/oauth/access_token{PARAMS}")
 
     try:
-        data = response.json()
+        content = response.content
+        # Decode byte string
+        access_token_string = content.decode("utf-8")
+
+        # Use urllib to grab access token param
+        query_params = parse_qs(access_token_string)
+        data = query_params["access_token"][0]
+        print(f"Data returned to front end: {data}")
         return data
     except ValueError as e:
         print(f"Decoding error: {e}")
@@ -44,8 +50,17 @@ def get_token() -> List[Dict[str, any]] | str:
 def get_data() -> List[Dict[str, any]] | None:
     """Retrieves user data"""
 
-    response = requests.get("https://api.github.com/user")
+    access_token = request.headers.get("Authorization")
+    print(access_token)
 
+    if not access_token:
+        return jsonify({"error": "No authorization header."}), 401
+
+    auth = "Bearer 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"
+    headers = {"Authorization": auth}
+
+    response = requests.get("https://api.github.com/user", headers=headers)
+    print(f"Response: {response.text}\n")
     try:
         return response.json()
     except ValueError as e:
