@@ -102,16 +102,15 @@ def request_user_lang_list(user_languages: List[str]) -> List[str]:
 def retrieve_top_repo_languages(repository) -> List[str]:
     """Retrieves up to three top languages from the current repository"""
 
-    # Holds the top three languages from the repository
-    lang_dict = {
-        key: value
-        for indx, (key, value) in enumerate(repository.get_languages().items())
-        if indx <= 3
-    }
-    print(lang_dict)
-    # Convert into a list
-    top_languages = list(lang_dict.keys())
+    top_languages = []
 
+    # Key holds the language, value holds the amount used in integer value
+    for i, (key, value) in enumerate(repository.get_languages()):
+        if i == 3:
+            break
+
+        top_languages.append(key)
+        
     return top_languages
 
 
@@ -159,6 +158,7 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
             # Add current object to the finalized list
             open_source_utilizer.open_source_list.append(open_source_project)
 
+        # Increase to the next language if there is an even amount
         if (
             len(open_source_utilizer.open_source_list) / 5
             == len(open_source_utilizer.open_source_list) // 5
