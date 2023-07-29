@@ -4,7 +4,14 @@
 
     // TODO - Change to cookies (don't use local storage D:)
 
-    
+    /*
+        Ideally here we want to trigger a flask route
+        to when the length of the the in data gets to 5, we fetch
+        that end point
+
+        Also, there should be a 3 second pause between each swap so
+        it doesn't break
+    */
     
     onMount(() => {
         local_storage_hold();

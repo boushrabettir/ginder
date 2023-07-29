@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory, jsonify, request
 import os
 from dotenv import load_dotenv
 from posts import request_github_projects
+from reccomendation import get_filtered_reccomendation
 from utils import fetch_top_three_languages
 from flask_cors import CORS
 import requests
@@ -75,7 +76,47 @@ def get_projects():
     top_languages = fetch_top_three_languages()
     github_projects = request_github_projects(top_languages)
 
-    return jsonify(github_projects)
+    seralized_data = [
+        {
+            "id": data.id,
+            "name": data.name,
+            "desc": data.description,
+            "link": data.link,
+            "owner": data.owner,
+            "languages": data.languages,
+            "stars": data.stars,
+        }
+        for data in github_projects
+    ]
+
+    response_object = {
+        "serialized_data": seralized_data,
+        "top_languages": top_languages,
+    }
+
+    return jsonify(response_object)
+
+
+@app.route("/get_next_group", methods=["GET"])
+def get_next_group():
+    """Retrieves the next group of projects to be sent to the frontend"""
+
+    filtered_reccomendation = get_filtered_reccomendation()
+
+    serialized_data = [
+        {
+            "id": data.id,
+            "name": data.name,
+            "desc": data.description,
+            "link": data.link,
+            "owner": data.owner,
+            "languages": data.languages,
+            "stars": data.stars,
+        }
+        for data in filtered_reccomendation
+    ]
+
+    return jsonify(serialized_data)
 
 
 # Serves static files interpreted/compiled in TS

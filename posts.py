@@ -137,23 +137,23 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
         repositories = gh.search_repositories(f"topic:{query[indx]}")
 
         for repository in repositories:
-            open_source_project_id = repository.id
-            open_source_project_name = repository.name
-            open_source_project_description = repository.description
-            open_source_project_link = repository.html_url
-            open_source_project_owner = repository.owner.login
-            open_source_project_languages = retrieve_top_repo_languages(repository)
-            open_source_project_stars = repository.stargazers_count
+            id = repository.id
+            name = repository.name
+            description = repository.description
+            link = repository.html_url
+            owner = repository.owner.login
+            languages = retrieve_top_repo_languages(repository)
+            stars = repository.stargazers_count
 
             # Create Open Source instance
             open_source_project = OpenSource(
-                open_source_project_id,
-                open_source_project_name,
-                open_source_project_description,
-                open_source_project_link,
-                open_source_project_owner,
-                open_source_project_languages,
-                open_source_project_stars,
+                id,
+                name,
+                description,
+                link,
+                owner,
+                languages,
+                stars,
             )
 
             # Add current object to the finalized list

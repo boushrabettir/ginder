@@ -1,4 +1,4 @@
-import type { User } from '$lib/user';
+import type { User } from '$lib/interface';
 import { writable, type Writable } from 'svelte/store';
 
 export let user_data = writable<User>();
