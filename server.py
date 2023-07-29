@@ -56,7 +56,7 @@ def get_data() -> List[Dict[str, any]] | None:
     if not access_token:
         return jsonify({"error": "No authorization header."}), 401
 
-    auth = "Bearer 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"
+    auth = "Bearer REMOVE"
     headers = {"Authorization": auth}
 
     response = requests.get("https://api.github.com/user", headers=headers)
