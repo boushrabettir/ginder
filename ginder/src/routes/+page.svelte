@@ -1,6 +1,6 @@
 <script lang="ts">
    
-    const CLIENT_ID = "f4b411c4d7b6b50ef40e";
+    const CLIENT_ID = "";
     const login_with_github = () => {
         window.location.assign(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`)
     }
