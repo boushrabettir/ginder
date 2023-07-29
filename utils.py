@@ -4,9 +4,7 @@ from typing import List
 from time import sleep
 
 # This is the access token that is used to access the user's information
-auth = Auth.Token(
-    ""
-)  # this an example access token
+auth = Auth.Token("")  # this an example access token
 g = Github(auth=auth)
 
 
