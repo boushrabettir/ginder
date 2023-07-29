@@ -21,7 +21,7 @@
                 // Grab access token from our server
 
                 const retrieve_token = async () => {
-                    await fetch(`http://localhost:4000/get_token?code=${param}`, {
+                    await fetch(`http://127.0.0.1:5000/get_token?code=${param}`, {
                         method: "GET",
                     }).then((res) => {
                         return res.json()

@@ -3,8 +3,8 @@ from github import Auth
 from typing import List
 from time import sleep
 
-# This is the access token that is used to access the user's information
-auth = Auth.Token("")  # this an example access token
+
+auth = Auth.Token("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")
 g = Github(auth=auth)
 
 
