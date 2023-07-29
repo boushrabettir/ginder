@@ -1,4 +1,4 @@
 venv
 .env
-debug.txt
 __pycache__
+node_modules
