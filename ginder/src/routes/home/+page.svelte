@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { user_data, local_storage_hold, retrieve_user_data } from "$lib/data";
-
+    
     // TODO - Change to cookies (don't use local storage D:)
 
     /*
@@ -19,6 +19,15 @@
 
 </script>
 
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8">
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ginder</title>
+  </head>
+</html>
 <p>You logged in!</p>
 
 
@@ -31,3 +40,4 @@
   <p>Loading user data...</p>
 {/if}
 <button on:click={retrieve_user_data}>Click for the test</button>
+

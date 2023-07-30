@@ -1,0 +1,6 @@
+:global(body) {
+	background: linear-gradient(to bottom right, #ff4500, #00ff00);
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+}
