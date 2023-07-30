@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { user_data, local_storage_hold, retrieve_user_data } from "$lib/data";
-    
+    import { projects, top_user_languages, next_group, retrieve_repositories, retrieve_languages, retrieve_next_project_group } from "$lib/gh_data";
     // TODO - Change to cookies (don't use local storage D:)
 
     /*
@@ -12,9 +12,15 @@
         Also, there should be a 3 second pause between each swap so
         it doesn't break
     */
+   
     
     onMount(() => {
         local_storage_hold();
+        retrieve_repositories();
+
+        if(localStorage.getItem("")?.length() <= 5) {
+          retrieve_next_project_group();
+        }
     });
 
 </script>
@@ -30,6 +36,7 @@
 </html>
 <p>You logged in!</p>
 
+{projects}
 
 {#if $user_data}
   <div>
