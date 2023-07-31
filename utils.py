@@ -4,7 +4,7 @@ from typing import List
 from time import sleep
 
 
-auth = Auth.Token("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")
+auth = Auth.Token("")
 g = Github(auth=auth)
 
 
