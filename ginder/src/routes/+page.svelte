@@ -1,14 +1,15 @@
 <script lang="ts">
-    import dotenv from 'dotenv';
+    // import dotenv from 'dotenv';
 
-    const CLIENT_ID = process.env.CLIENT_ID || '';
+    // const CLIENT_ID = process.env.CLIENT_ID || '';
+    const TEMP = "f4b411c4d7b6b50ef40e";
     const login_with_github = () => {
-        window.location.assign(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`)
+        window.location.assign(`https://github.com/login/oauth/authorize?client_id=${TEMP}`)
     }
 </script>
 
-<!-- Update this into components! -->
-<!DOCTYPE html>
+
+
 <html lang="en">
   <meta charset="utf-8">
   <head>
@@ -27,86 +28,16 @@
             <p class="title" id="ginder">ginder</p>
             <p class="subtitle" id="welcome">Effortless connection and collaboration with a <span id="blue-text">simple</span> swipe.</p>
         </div>
-        <button class="button" id="button-color" on:click={login_with_github}>
+        <button on:click={login_with_github}>
             👾 Login through Github 🤖
         </button>
     </div>
-    <div class="card">
-        <div class="card-image">
-          <figure class="image is-3by9">
-            <img src="/photos/github.png" alt="Placeholder">
-            <p class="subtitle is-4" id="user-info">
-                <span id="bolded">Terry Clark</span>: • @tclarkk | 
-                <span id="bolded">Followers</span>: 1.1k<br/>
-                <button id="follow-button">
-                    + Follow
-                </button>
-            </p>
+   
 
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-content">
-              <p class="title is-3">BEARTEAR</p>
-            </div>
-          </div>
-      
-          <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Phasellus nec iaculis mauris.
-            
-            <br/>
-            <p class = "subtitle is-6" id="stats">
-                🔤 Languages: Rust, TypeScript <br/>
-                ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Commits: 39
-            </p>
-            
-          </div>
-        </div>
-      </div>
-
-      <div class="card c2">
-        <div class="card-image">
-          <figure class="image is-3by9">
-            <img src="/photos/github.png" alt="Placeholder">
-            <p class="subtitle is-4" id="user-info">
-                <span id="bolded">Terry Clark</span>: • @tclarkk | 
-                <span id="bolded">Followers</span>: 1.1k<br/>
-                <button id="follow-button">
-                    + Follow
-                </button>
-            </p>
-
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-content">
-              <p class="title is-3">BEARTEAR</p>
-            </div>
-          </div>
-      
-          <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Phasellus nec iaculis mauris.
-            
-            <br/>
-            <p class = "subtitle is-6" id="stats">
-                🔤 Languages: Rust, TypeScript <br/>
-                ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Commits: 39
-            </p>
-            
-          </div>
-        </div>
-      </div>
-
-
-    
       
 </body>
 </html>
-
+<!-- 
 <style>
 :global(body) {
     background: linear-gradient(to bottom right, #11111b, #383843, #171721);
@@ -216,4 +147,4 @@ body {
    margin-top: 0.7rem;
 }
 
-</style>
+</style> -->

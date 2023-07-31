@@ -63,6 +63,7 @@ export const retrieve_user_data = async (): Promise<Writable<User>> => {
 		if (response.ok) {
 			// Convert string literal to JSON object
 			let data: string = await response.text();
+			console.log(data);
 			const object: any = JSON.parse(data);
 
 			if (data) {

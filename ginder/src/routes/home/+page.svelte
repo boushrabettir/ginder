@@ -1,31 +1,33 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { user_data, local_storage_hold, retrieve_user_data } from "$lib/data";
-    import { projects, top_user_languages, next_group, retrieve_repositories, retrieve_languages, retrieve_next_project_group } from "$lib/gh_data";
-    // TODO - Change to cookies (don't use local storage D:)
+  import { onMount } from 'svelte';
+  import { user_data, local_storage_hold, retrieve_user_data } from "$lib/data";
+  import { projects, retrieve_repositories, retrieve_next_project_group, current_project, curr_project } from "$lib/gh_data";
+  
+  // TODO - Change to cookies (don't use local storage D:)
 
-    /*
-        Ideally here we want to trigger a flask route
-        to when the length of the the in data gets to 5, we fetch
-        that end point
+  /*
+      Ideally here we want to trigger a flask route
+      to when the length of the data gets to 5, we fetch
+      that endpoint
 
-        Also, there should be a 3 second pause between each swap so
-        it doesn't break
-    */
-   
-    
-    onMount(() => {
-        local_storage_hold();
-        retrieve_repositories();
+      Also, there should be a 3-second pause between each swap so
+      it doesn't break
+  */
+ 
+ 
+ 
+  onMount(async () => {
+    local_storage_hold();
+    const local_data = JSON.parse(localStorage.getItem("projects") || "[]");
+    if (local_data.length === 5) {
+      await retrieve_next_project_group();
+    }
+    await retrieve_repositories();
 
-        if(localStorage.getItem("")?.length() <= 5) {
-          retrieve_next_project_group();
-        }
-    });
-
+    console.log(curr_project);
+  });
 </script>
 
-<!DOCTYPE html>
 <html lang="en">
   <meta charset="utf-8">
   <head>
@@ -35,9 +37,6 @@
   </head>
 </html>
 <p>You logged in!</p>
-
-{projects}
-
 {#if $user_data}
   <div>
     <img src={$user_data.avatar_url} alt="User Avatar" />
@@ -46,5 +45,11 @@
 {:else}
   <p>Loading user data...</p>
 {/if}
-<button on:click={retrieve_user_data}>Click for the test</button>
 
+<div class="post">
+  {#if curr_project}
+    <p>{curr_project}</p>
+  {:else}
+    <p>Loading project data...</p>
+  {/if}
+</div>

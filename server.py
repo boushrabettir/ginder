@@ -3,7 +3,9 @@ import os
 from dotenv import load_dotenv
 from posts import request_github_projects
 from reccomendation import get_filtered_reccomendation
-from utils import fetch_top_three_languages
+from posts import OpenSource
+
+# from utils import fetch_top_three_languages
 from flask_cors import CORS
 import requests
 from typing import List, Dict
@@ -51,17 +53,14 @@ def get_token() -> List[Dict[str, any]] | str:
 def get_data() -> List[Dict[str, any]] | None:
     """Retrieves user data"""
 
-    access_token = request.headers.get("Authorization")
-    print(access_token)
+    headers = request.headers.get("Authorization")
 
-    if not access_token:
+    if not headers:
         return jsonify({"error": "No authorization header."}), 401
 
-    auth = "Bearer REMOVE"
-    headers = {"Authorization": auth}
+    temp = {"Authorization": headers}
+    response = requests.get("https://api.github.com/user", headers=temp)
 
-    response = requests.get("https://api.github.com/user", headers=headers)
-    print(f"Response: {response.text}\n")
     try:
         return response.json()
     except ValueError as e:
@@ -73,8 +72,18 @@ def get_data() -> List[Dict[str, any]] | None:
 def get_projects():
     """Retrieves the projects list from Github API"""
 
-    top_languages = fetch_top_three_languages()
-    github_projects = request_github_projects(top_languages)
+    top_languages = ["python", "rust", "c++"]
+    github_projects = [
+        OpenSource(
+            123,
+            "ginder",
+            "The go-to platform for developers offers effortless connection, collaboration, and GitHub repo stat tracking with a simple swipe.",
+            "https://github.com/boushrabettir/ginder",
+            "boushrabettir",
+            ["python", "svelte", "typescript"],
+            2,
+        )
+    ]
 
     seralized_data = [
         {

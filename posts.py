@@ -8,7 +8,7 @@ import random
 MAX_LANGUAGE_LENGTH = 3
 
 # Holds the max amount of github projects
-MAX_GH_PROJECT_LENGTH = 15
+MAX_GH_PROJECT_LENGTH = 5
 
 
 @dataclass
@@ -104,13 +104,17 @@ def retrieve_top_repo_languages(repository) -> List[str]:
 
     top_languages = []
 
-    # Key holds the language, value holds the amount used in integer value
-    for i, (key, value) in enumerate(repository.get_languages()):
-        if i == 3:
-            break
+    languages_data = repository.get_languages()
 
-        top_languages.append(key)
-        
+    if not languages_data or not isinstance(languages_data, (list, tuple)):
+        # Handle the case where repository.get_languages() returned None or unexpected data.
+        return top_languages
+
+    # Key holds the language, value holds the amount used in integer value
+    for _, (key, _) in enumerate(languages_data):
+        data = list(sorted(key.items(), key=lambda x: x[1], reverse=True))
+        top_languages.append(data[:3])
+
     return top_languages
 
 
