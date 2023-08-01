@@ -64,14 +64,6 @@
   <p>Loading user data...</p>
 {/if}
 
-<!-- {#each data["data"] as d}
-  <p>Boushra Bettir • {d["owner"]}</p>
-  <button>+ Follow</button>
-  <p>{d["name"]}</p>
-  <p>{d["desc"]}</p>
-  <p>Languages: {d["languages"]}</p>
-  <p>Stargazers: {d["stars"]} • Forks: 12.1k • Commits: 12 </p>
-{/each} -->
 
 {#if curr}
   <p>Boushra Bettir • {curr["owner"]}</p>
