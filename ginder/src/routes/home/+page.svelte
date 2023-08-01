@@ -1,30 +1,48 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { user_data, local_storage_hold, retrieve_user_data } from "$lib/data";
-  import { projects, retrieve_repositories, retrieve_next_project_group, current_project, curr_project } from "$lib/gh_data";
+  import { retrieve_next_project_group } from './gh_data';
   
-  // TODO - Change to cookies (don't use local storage D:)
+  export let data: any;
+  let curr: any = data["data"].shift();
+ 
 
-  /*
-      Ideally here we want to trigger a flask route
-      to when the length of the data gets to 5, we fetch
-      that endpoint
+  /**
+   * right adds the next data object to the right swipes
+   * for the reccomendation system and retrieves the next block
+   */
+  const right = () => {
+    if (localStorage.getItem("right-swipes") == undefined || localStorage.getItem("right-swipes") == null) {
+      localStorage.setItem("right-swipes", JSON.stringify([curr]));
+    } else {
+      let right_swipe_data = JSON.parse(localStorage.getItem("right-swipes") || "[]");
+      console.log(right_swipe_data);
+      right_swipe_data.push(curr);
+      localStorage.setItem("right-swipes", JSON.stringify(right_swipe_data));
+    }
+    curr = data["data"].shift();
+  }
 
-      Also, there should be a 3-second pause between each swap so
-      it doesn't break
-  */
- 
- 
- 
+  /**
+   * left retrieves the next data block
+   */
+  const left = () => {
+    curr = data["data"].shift();
+  }
+
+
   onMount(async () => {
     local_storage_hold();
-    const local_data = JSON.parse(localStorage.getItem("projects") || "[]");
-    if (local_data.length === 5) {
-      await retrieve_next_project_group();
+    
+    /**
+     * Determines whether or not new data should be added
+     * into the list
+    */
+    if (localStorage.getItem("right-swipes")?.length == 5) {
+      let next_group = retrieve_next_project_group();
+      data.push(next_group);
     }
-    await retrieve_repositories();
-
-    console.log(curr_project);
+ 
   });
 </script>
 
@@ -46,10 +64,23 @@
   <p>Loading user data...</p>
 {/if}
 
-<div class="post">
-  {#if curr_project}
-    <p>{curr_project}</p>
-  {:else}
-    <p>Loading project data...</p>
-  {/if}
-</div>
+<!-- {#each data["data"] as d}
+  <p>Boushra Bettir • {d["owner"]}</p>
+  <button>+ Follow</button>
+  <p>{d["name"]}</p>
+  <p>{d["desc"]}</p>
+  <p>Languages: {d["languages"]}</p>
+  <p>Stargazers: {d["stars"]} • Forks: 12.1k • Commits: 12 </p>
+{/each} -->
+
+{#if curr}
+  <p>Boushra Bettir • {curr["owner"]}</p>
+  <button>+ Follow</button>
+  <p>{curr["name"]}</p>
+  <p>{curr["desc"]}</p>
+  <p>Languages: {curr["languages"]}</p>
+  <p>Stargazers: {curr["stars"]} • Forks: 12.1k • Commits: 12</p>
+{/if}
+
+<button on:click={left}>next</button>
+<button on:click={right}>next</button>

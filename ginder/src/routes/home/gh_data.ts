@@ -8,7 +8,6 @@ export let curr_project: Object = {};
  * retrieve_repositories retrieves the github repositories
  * from the server
  */
-//if (param && localStorage.getItem('token') === null)
 export const retrieve_repositories = async (): Promise<Object[]> => {
 	try {
 		let response = await fetch('http://127.0.0.1:5000/get_projects');

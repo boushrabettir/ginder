@@ -73,17 +73,7 @@ def get_projects():
     """Retrieves the projects list from Github API"""
 
     top_languages = ["python", "rust", "c++"]
-    github_projects = [
-        OpenSource(
-            123,
-            "ginder",
-            "The go-to platform for developers offers effortless connection, collaboration, and GitHub repo stat tracking with a simple swipe.",
-            "https://github.com/boushrabettir/ginder",
-            "boushrabettir",
-            ["python", "svelte", "typescript"],
-            2,
-        )
-    ]
+    github_projects = request_github_projects(top_languages)
 
     seralized_data = [
         {
