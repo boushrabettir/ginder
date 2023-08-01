@@ -2,7 +2,7 @@
     // import dotenv from 'dotenv';
 
     // const CLIENT_ID = process.env.CLIENT_ID || '';
-    const TEMP = "f4b411c4d7b6b50ef40e";
+    const TEMP = "";
     const login_with_github = () => {
         window.location.assign(`https://github.com/login/oauth/authorize?client_id=${TEMP}`)
     }
