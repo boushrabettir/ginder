@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from github import Github
+from github import Github, Auth
 import random
 
 
@@ -8,7 +8,7 @@ import random
 MAX_LANGUAGE_LENGTH = 3
 
 # Holds the max amount of github projects
-MAX_GH_PROJECT_LENGTH = 5
+MAX_GH_PROJECT_LENGTH = 15
 
 
 @dataclass
@@ -118,14 +118,18 @@ def retrieve_top_repo_languages(repository) -> List[str]:
     return top_languages
 
 
-def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
+def request_github_projects(
+    user_languages: List[str], auth_token: str
+) -> List[OpenSource]:
     """Requests Github Repository information"""
 
     # Create Open Source Utilizer instance
     open_source_utilizer = OpenSourceUtilizer([])
 
+    auth = Auth.Token(auth_token)
+
     # Create a github instance
-    gh = Github()
+    gh = Github(auth=auth)
 
     # Hold the user languages in a query variable
     query = user_languages
@@ -133,34 +137,35 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
     # Index variable to traverse through the query list
     indx = 0
 
-    # Continue adding more projects until the list is at max length
-    while len(open_source_utilizer.open_source_list) <= MAX_GH_PROJECT_LENGTH:
-        # Every language must have 5 projects each within the final list
+    repositories = gh.search_repositories(f"topic:{query[indx]}")
 
-        repositories = gh.search_repositories(f"topic:{query[indx]}")
+    for repository in repositories:
+        id = repository.id
+        name = repository.name
+        description = repository.description
+        link = repository.html_url
+        owner = repository.owner.login
+        languages = retrieve_top_repo_languages(repository)
+        stars = repository.stargazers_count
 
-        for repository in repositories:
-            id = repository.id
-            name = repository.name
-            description = repository.description
-            link = repository.html_url
-            owner = repository.owner.login
-            languages = retrieve_top_repo_languages(repository)
-            stars = repository.stargazers_count
+        # Create Open Source instance
+        open_source_project = OpenSource(
+            id,
+            name,
+            description,
+            link,
+            owner,
+            languages,
+            stars,
+        )
 
-            # Create Open Source instance
-            open_source_project = OpenSource(
-                id,
-                name,
-                description,
-                link,
-                owner,
-                languages,
-                stars,
-            )
+        print(open_source_project)
+        # Add current object to the finalized list
+        open_source_utilizer.open_source_list.append(open_source_project)
 
-            # Add current object to the finalized list
-            open_source_utilizer.open_source_list.append(open_source_project)
+        # Continue adding more projects until the list is at max length
+        if len(open_source_utilizer.open_source_list) == MAX_GH_PROJECT_LENGTH:
+            break
 
         # Increase to the next language if there is an even amount
         if (
@@ -169,4 +174,4 @@ def request_github_projects(user_languages: List[str]) -> OpenSourceUtilizer:
         ):
             indx += 1
 
-    return open_source_utilizer
+    return open_source_utilizer.open_source_list

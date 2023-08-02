@@ -6,17 +6,17 @@ from typing import List
 import utils as ut
 
 
-def compute_cosine_similarity() -> object:
+def compute_cosine_similarity(right_swipes: List[OpenSource]) -> object:
     """Returns a dictionary with cosine similarity and a dictionary"""
 
     # Holds desciption for each project
     description_holder = []
 
     # Grab insession right swipes
-    in_session_right_swipes: OpenSource = []
+    in_session_right_swipes: OpenSource = right_swipes
 
     for project in in_session_right_swipes:
-        description_holder.append(project.description)
+        description_holder.append(project.desc)
 
     vectorizer = TfidfVectorizer()
 

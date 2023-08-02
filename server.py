@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 from posts import request_github_projects
 from reccomendation import get_filtered_reccomendation
 from posts import OpenSource
-
-# from utils import fetch_top_three_languages
+from utils import fetch_user_languages
 from flask_cors import CORS
 import requests
 from typing import List, Dict
@@ -28,11 +27,14 @@ def get_token() -> List[Dict[str, any]] | str:
 
     CLIENT_ID: str = os.getenv("CLIENT_ID")
     CLIENT_SECRET: str = os.getenv("CLIENT_SECRET")
+
     code_param: str = request.args.get("code")
 
-    PARAMS: str = f"?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&code={code_param}&scope=read:user,repo"
+    response_params: str = f"?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&code={code_param}&scope=read:user,repo"
 
-    response = requests.get(f"https://github.com/login/oauth/access_token{PARAMS}")
+    response = requests.get(
+        f"https://github.com/login/oauth/access_token{response_params}"
+    )
 
     try:
         content = response.content
@@ -42,7 +44,7 @@ def get_token() -> List[Dict[str, any]] | str:
         # Use urllib to grab access token param
         query_params = parse_qs(access_token_string)
         data = query_params["access_token"][0]
-        print(f"Data returned to front end: {data}")
+
         return data
     except ValueError as e:
         print(f"Decoding error: {e}")
@@ -58,8 +60,8 @@ def get_data() -> List[Dict[str, any]] | None:
     if not headers:
         return jsonify({"error": "No authorization header."}), 401
 
-    temp = {"Authorization": headers}
-    response = requests.get("https://api.github.com/user", headers=temp)
+    auth_headers = {"Authorization": headers}
+    response = requests.get("https://api.github.com/user", headers=auth_headers)
 
     try:
         return response.json()
@@ -72,8 +74,13 @@ def get_data() -> List[Dict[str, any]] | None:
 def get_projects():
     """Retrieves the projects list from Github API"""
 
-    top_languages = ["python", "rust", "c++"]
-    github_projects = request_github_projects(top_languages)
+    # Retrieves token from front end post request
+    post_rq_data = request.get_json()
+    token = post_rq_data.get("token")
+
+    top_languages = fetch_user_languages(token)
+
+    github_projects = request_github_projects(top_languages, token)
 
     seralized_data = [
         {
@@ -116,12 +123,6 @@ def get_next_group():
     ]
 
     return jsonify(serialized_data)
-
-
-# Serves static files interpreted/compiled in TS
-@app.route("/<path:path>")
-def serve_static(path):
-    return send_from_directory("client/public", path)
 
 
 if __name__ == "__main__":

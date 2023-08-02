@@ -1,42 +1,36 @@
 from github import Github
 from github import Auth
 from typing import List
-from time import sleep
+from itertools import islice
 
 
-# auth = Auth.Token("")
-# g = Github(auth=auth)
+def fetch_user_languages(auth_token: str) -> List[str]:
+    """Fetches users top languages"""
 
+    auth = Auth.Token(auth_token)
+    gh = Github(auth=auth)
 
-# def fetch_top_three_languages() -> List[str]:
-#     # Store the languages in a dictionary
-#     unique_languages = {}
+    unique_languages = {}
 
-#     # Store the top languages in a list
-#     top_languages_list = []
+    user = gh.get_user()
 
-#     # Loop through the user's repositories
-#     for repo in g.get_user().get_repos():
-#         # Ensure that the repository is owned by the user
-#         if repo.owner.login == g.get_user().login:
-#             # Loop through the languages used in the repository
-#             for lang in repo.get_languages():
-#                 # Check if the language is not in the dictionary of languages
-#                 if lang not in unique_languages:
-#                     unique_languages[lang] = 1
-#                 else:
-#                     unique_languages[lang] += 1
+    # https://www.geeksforgeeks.org/python-itertools-islice/#
+    for repository in islice(user.get_repos(), 3):
+        if repository.owner.login == user.login:
+            all_languages = repository.get_languages()
+            all_languages = sorted(
+                all_languages.keys(), key=lambda x: x[1], reverse=True
+            )
 
-#     # Sort the languages in descending order depending on the number of times they are used
-#     sorting_languages = sorted(
-#         unique_languages.items(), key=lambda x: x[1], reverse=True
-#     )
+            for lang in all_languages:
+                if lang not in unique_languages:
+                    unique_languages[lang] = 1
+                else:
+                    unique_languages[lang] += 1
 
-#     # Get the top 3 languages used by the user
-#     top_three_languages = sorting_languages[:3]
+    # Sort list again in descending order
+    unique_languages_list = sorted(
+        unique_languages.keys(), key=lambda x: x[1], reverse=True
+    )
 
-#     for key, _ in top_three_languages:
-#         # Add the language name to the list of top languages
-#         top_languages_list.append(key)
-
-#     return top_languages_list
+    return unique_languages_list

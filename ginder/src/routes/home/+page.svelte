@@ -5,7 +5,7 @@
   
   export let data: any;
   let curr: any = data["data"].shift();
- 
+
 
   /**
    * right adds the next data object to the right swipes
@@ -21,6 +21,16 @@
       localStorage.setItem("right-swipes", JSON.stringify(right_swipe_data));
     }
     curr = data["data"].shift();
+    
+    /**
+     * Determines whether or not new data should be added
+     * into the list
+    */
+    if (localStorage.getItem("right-swipes")?.length == 5) {
+      let next_group = retrieve_next_project_group();
+      data.push(next_group);
+    }
+    
   }
 
   /**
@@ -33,16 +43,7 @@
 
   onMount(async () => {
     local_storage_hold();
-    
-    /**
-     * Determines whether or not new data should be added
-     * into the list
-    */
-    if (localStorage.getItem("right-swipes")?.length == 5) {
-      let next_group = retrieve_next_project_group();
-      data.push(next_group);
-    }
- 
+    retrieve_user_data();
   });
 </script>
 
@@ -55,15 +56,9 @@
   </head>
 </html>
 <p>You logged in!</p>
-{#if $user_data}
-  <div>
-    <img src={$user_data.avatar_url} alt="User Avatar" />
-    <h2>{$user_data.username}</h2>
-  </div>
-{:else}
-  <p>Loading user data...</p>
-{/if}
 
+<!-- <p>ginder | @{user_data["username"]}</p>
+<img src={user_data["avatar_url"]} /> -->
 
 {#if curr}
   <p>Boushra Bettir • {curr["owner"]}</p>

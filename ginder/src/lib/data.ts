@@ -1,7 +1,6 @@
 import type { User } from '$lib/interface';
-import { writable, type Writable } from 'svelte/store';
 
-export let user_data = writable<User>();
+export let user_data = {};
 
 /**
  * retrieve_code_value retrieves the oauth code from the URL
@@ -51,7 +50,7 @@ export const local_storage_hold = async () => {
 /**
  * retrieve_user_data retrieves the users data from github using the authentication token
  */
-export const retrieve_user_data = async (): Promise<Writable<User>> => {
+export const retrieve_user_data = async () => {
 	try {
 		const response = await fetch('http://127.0.0.1:5000/get_user_data', {
 			method: 'GET',
@@ -67,10 +66,11 @@ export const retrieve_user_data = async (): Promise<Writable<User>> => {
 			const object: any = JSON.parse(data);
 
 			if (data) {
-				user_data.set({
+				user_data = {
 					avatar_url: object['avatar_url'],
 					username: object['login']
-				});
+				};
+				localStorage.setItem('user-data', JSON.stringify(user_data));
 			}
 		} else {
 			console.error(`Error with response: ${response.status}`);
@@ -78,6 +78,4 @@ export const retrieve_user_data = async (): Promise<Writable<User>> => {
 	} catch (error) {
 		console.error(`Error fetching data: ${error}`);
 	}
-
-	return user_data;
 };
