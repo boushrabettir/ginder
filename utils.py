@@ -15,6 +15,7 @@ def fetch_user_languages(auth_token: str) -> List[str]:
     user = gh.get_user()
 
     # https://www.geeksforgeeks.org/python-itertools-islice/#
+
     for repository in islice(user.get_repos(), 3):
         if repository.owner.login == user.login:
             all_languages = repository.get_languages()
