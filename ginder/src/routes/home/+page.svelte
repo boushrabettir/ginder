@@ -57,16 +57,16 @@
 </html>
 <p>You logged in!</p>
 
-<!-- <p>ginder | @{user_data["username"]}</p>
-<img src={user_data["avatar_url"]} /> -->
+<p>ginder | @{user_data["username"]}</p>
+<img src={user_data["avatar_url"]} alt="Github profile" />
 
 {#if curr}
-  <p>Boushra Bettir • {curr["owner"]}</p>
+  <p>{curr["owner"]} • {curr["username"]}</p>
   <button>+ Follow</button>
   <p>{curr["name"]}</p>
   <p>{curr["desc"]}</p>
   <p>Languages: {curr["languages"]}</p>
-  <p>Stargazers: {curr["stars"]} • Forks: 12.1k • Commits: 12</p>
+  <p>Stargazers: {curr["stars"]} • Forks: {curr["forks"]} • Contributers: {curr["contributers"]}</p>
 {/if}
 
 <button on:click={left}>next</button>

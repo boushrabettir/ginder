@@ -30,11 +30,20 @@ class OpenSource:
     # Name of owner
     owner: str
 
+    # Owners Username
+    username: str
+
     # Language(s) used
     languages: List[str]
 
     # Stars on project
     stars: float
+
+    # Total forks on the repo
+    forks: int
+
+    # Total open contributers
+    contributers: int
 
 
 @dataclass
@@ -102,20 +111,12 @@ def request_user_lang_list(user_languages: List[str]) -> List[str]:
 def retrieve_top_repo_languages(repository) -> List[str]:
     """Retrieves up to three top languages from the current repository"""
 
-    top_languages = []
-
     languages_data = repository.get_languages()
 
-    if not languages_data or not isinstance(languages_data, (list, tuple)):
-        # Handle the case where repository.get_languages() returned None or unexpected data.
-        return top_languages
+    all_languages = sorted(languages_data.keys(), key=lambda x: x[1], reverse=True)
+    all_languages = all_languages[:3]
 
-    # Key holds the language, value holds the amount used in integer value
-    for _, (key, _) in enumerate(languages_data):
-        data = list(sorted(key.items(), key=lambda x: x[1], reverse=True))
-        top_languages.append(data[:3])
-
-    return top_languages
+    return all_languages
 
 
 def request_github_projects(
@@ -144,9 +145,12 @@ def request_github_projects(
         name = repository.name
         description = repository.description
         link = repository.html_url
-        owner = repository.owner.login
+        owner = repository.owner
+        username = repository.owner.login
         languages = retrieve_top_repo_languages(repository)
         stars = repository.stargazers_count
+        forks = repository.forks
+        contributers = repository.get_contributors(anon="true").totalCount
 
         # Create Open Source instance
         open_source_project = OpenSource(
@@ -155,8 +159,11 @@ def request_github_projects(
             description,
             link,
             owner,
+            username,
             languages,
             stars,
+            forks,
+            contributers,
         )
 
         print(open_source_project)

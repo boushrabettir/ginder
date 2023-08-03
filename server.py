@@ -89,8 +89,11 @@ def get_projects():
             "desc": data.description,
             "link": data.link,
             "owner": data.owner,
+            "username": data.username,
             "languages": data.languages,
             "stars": data.stars,
+            "forks": data.forks,
+            "contributers": data.contributers,
         }
         for data in github_projects
     ]

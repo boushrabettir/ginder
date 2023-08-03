@@ -1,6 +1,6 @@
 import type { User } from '$lib/interface';
 
-export let user_data = {};
+export let user_data: any = {};
 
 /**
  * retrieve_code_value retrieves the oauth code from the URL
