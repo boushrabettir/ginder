@@ -1,11 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { user_data, local_storage_hold, retrieve_user_data } from "$lib/data";
+  import { user_data, local_storage_hold, retrieve_user_data, pop_new_project } from "$lib/data";
   import { retrieve_next_project_group } from './gh_data';
-  
-  export let data: any;
-  let curr: any = data["data"].shift();
 
+  let curr: any;
 
   /**
    * right adds the next data object to the right swipes
@@ -20,32 +18,32 @@
       right_swipe_data.push(curr);
       localStorage.setItem("right-swipes", JSON.stringify(right_swipe_data));
     }
-    curr = data["data"].shift();
-    
+
+    curr = pop_new_project();
+  
+
     /**
      * Determines whether or not new data should be added
      * into the list
     */
-    if (localStorage.getItem("right-swipes")?.length == 5) {
-      let next_group = retrieve_next_project_group();
-      data.push(next_group);
+    if (JSON.parse(localStorage.getItem("right-swipes") || "[]")?.length === 5) {
+      retrieve_next_project_group();
     }
     
   }
-//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
+
   /**
    * left retrieves the next data block
    */
-
   const left = () => {
-    curr = data["data"].shift();
+    curr = pop_new_project();
   }
-
 
   
   onMount(async () => {
     local_storage_hold();
     retrieve_user_data();
+    curr = pop_new_project();
   });
 
   console.log(user_data)
@@ -73,5 +71,5 @@
   <p>Stargazers: {curr["stars"]} • Forks: {curr["forks"]} • Contributers: {curr["contributers"]}</p>
 {/if}
 
-<button on:click={left}>next</button>
-<button on:click={right}>next</button>
+<button on:click={left}>{'<'}</button>
+<button on:click={right}>{'>'}</button>

@@ -147,7 +147,7 @@ def request_github_projects(
         name = repository.name
         description = repository.description
         link = repository.html_url
-        owner = repository.owner
+        owner = repository.full_name
         username = repository.owner.login
         languages = retrieve_top_repo_languages(repository)
         stars = repository.stargazers_count

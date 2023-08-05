@@ -4,19 +4,19 @@ from sklearn.metrics.pairwise import cosine_similarity
 from posts import OpenSource, OpenSourceUtilizer, request_github_projects
 from typing import List
 import utils as ut
+import json
 
 
-def compute_cosine_similarity(right_swipes: List[OpenSource]) -> object:
+def compute_cosine_similarity(right_swipes: List[object]) -> object:
     """Returns a dictionary with cosine similarity and a dictionary"""
 
     # Holds desciption for each project
     description_holder = []
 
-    # Grab insession right swipes
-    in_session_right_swipes: OpenSource = right_swipes
+    in_session_right_swipes = json.loads(right_swipes)
 
     for project in in_session_right_swipes:
-        description_holder.append(project.desc)
+        description_holder.append(project["desc"])
 
     vectorizer = TfidfVectorizer()
 
@@ -34,17 +34,22 @@ def compute_cosine_similarity(right_swipes: List[OpenSource]) -> object:
     return {"indices": project_to_indices, "cosine_similarity": cosine_sim}
 
 
-def get_filtered_reccomendation() -> List[OpenSource]:
+def get_filtered_reccomendation(
+    right_swipes: List[object], token: str
+) -> List[OpenSource]:
     """Retrieves filtered recommendation list"""
 
-    USER_LANGUAGES = ut.fetch_top_three_languages()
+    # Create Open Source Utilizer instance
+    open_source_utilizer = OpenSourceUtilizer([])
+
+    USER_LANGUAGES = ut.fetch_user_languages(token)
 
     # Retrieve new project list to be filtered out
-    new_unfiltered_project_list: OpenSourceUtilizer = request_github_projects(
-        USER_LANGUAGES
+    new_unfiltered_project_list: List[OpenSource] = request_github_projects(
+        USER_LANGUAGES, token
     )
 
-    data = compute_cosine_similarity()
+    data = compute_cosine_similarity(right_swipes)
 
     # Holds object and numpy array in seperate variables
     indices = data["indices"]
@@ -53,9 +58,9 @@ def get_filtered_reccomendation() -> List[OpenSource]:
     # Holds the filtered reccomendation list
     filtered_list_reccomendation: List[OpenSource] = []
 
-    for project in new_unfiltered_project_list.open_source_list:
+    for i, project in enumerate(new_unfiltered_project_list):
         if project.description in indices:
-            indx = indices["description"]
+            indx = indices[i]
             similarity_score = cos_similarity[indx]
 
             # Holds tuples for similarity - E.g. [(0, 0.85), (1, 0.76), (2, 0.92)]
@@ -78,6 +83,6 @@ def get_filtered_reccomendation() -> List[OpenSource]:
             )
 
     # Add filtered list in our utilizer
-    OpenSourceUtilizer.open_source_list.extend(filtered_list_reccomendation)
+    open_source_utilizer.open_source_list.append(filtered_list_reccomendation)
 
-    return OpenSourceUtilizer.open_source_list
+    return open_source_utilizer.open_source_list

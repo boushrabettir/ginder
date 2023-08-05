@@ -79,3 +79,15 @@ export const retrieve_user_data = async () => {
 		console.error(`Error fetching data: ${error}`);
 	}
 };
+
+/**
+ * pop_new_project grabs data from local storage and
+ * pops a new project
+ */
+export const pop_new_project = (): Object => {
+	let local_data = JSON.parse(localStorage.getItem('projects') || '[]');
+	let curr: Object = local_data.shift();
+	localStorage.setItem('projects', JSON.stringify(local_data));
+
+	return curr;
+};

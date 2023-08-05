@@ -5,6 +5,6 @@ export const get = ({ request }: any) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ data: 'f4b411c4d7b6b50ef40e' })
+		body: JSON.stringify({ data: CLIENT_ID })
 	};
 };

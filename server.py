@@ -79,11 +79,9 @@ def get_projects():
         post_rq_data = request.get_json()
         token = post_rq_data.get("token")
 
-    top_languages = fetch_user_languages("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")
+    top_languages = fetch_user_languages(token)
 
-    github_projects = request_github_projects(
-        top_languages, "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"
-    )
+    github_projects = request_github_projects(top_languages, token)
 
     seralized_data = [
         {
@@ -109,12 +107,17 @@ def get_projects():
     return jsonify(response_object)
 
 
-@app.route("/get_next_group", methods=["GET"])
+@app.route("/get_next_group", methods=["POST", "GET"])
 def get_next_group():
     """Retrieves the next group of projects to be sent to the frontend"""
 
-    filtered_reccomendation = get_filtered_reccomendation()
+    if request.method == "POST":
+        post_rq_data = request.get_json()
+        right_swipes_data = post_rq_data.get("data")
+        token = post_rq_data.get("token")
 
+    filtered_reccomendation = get_filtered_reccomendation(right_swipes_data, token)
+    print(filtered_reccomendation)
     serialized_data = [
         {
             "id": data.id,
@@ -122,8 +125,11 @@ def get_next_group():
             "desc": data.description,
             "link": data.link,
             "owner": data.owner,
+            "username": data.username,
             "languages": data.languages,
             "stars": data.stars,
+            "forks": data.forks,
+            "contributers": data.contributers,
         }
         for data in filtered_reccomendation
     ]

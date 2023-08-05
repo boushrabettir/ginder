@@ -63,15 +63,16 @@ export const retrieve_languages = async (): Promise<string[]> => {
 export const retrieve_next_project_group = async () => {
 	let next_group: Object[] = [];
 
-	let data = JSON.stringify(localStorage.getItem('right-swipes'));
-
 	try {
 		let response = await fetch('http://127.0.0.1:5000/get_next_group', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(data)
+			body: JSON.stringify({
+				data: localStorage.getItem('right-swipes'),
+				token: localStorage.getItem('token')
+			})
 		});
 
 		if (response.ok) {
@@ -81,9 +82,7 @@ export const retrieve_next_project_group = async () => {
 
 			in_session_projects.push(next_group);
 
-			const modified_content = JSON.stringify(in_session_projects);
-
-			localStorage.setItem('projects', modified_content);
+			localStorage.setItem('projects', JSON.stringify(in_session_projects));
 		}
 	} catch (error) {
 		console.error(`Error fetching data: ${error}`);
