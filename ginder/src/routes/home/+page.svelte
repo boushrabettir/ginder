@@ -32,19 +32,23 @@
     }
     
   }
-
+//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
   /**
    * left retrieves the next data block
    */
+
   const left = () => {
     curr = data["data"].shift();
   }
 
 
+  
   onMount(async () => {
     local_storage_hold();
     retrieve_user_data();
   });
+
+  console.log(user_data)
 </script>
 
 <html lang="en">

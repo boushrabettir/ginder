@@ -13,10 +13,10 @@ export const retrieve_repositories = async (): Promise<Object[]> => {
 		let response = await fetch('http://127.0.0.1:5000/get_projects', {
 			method: 'POST',
 			headers: {
-				Content: 'application/json'
+				'Content-Type': 'application/json'
 			},
 
-			body: localStorage.getItem('token')
+			body: JSON.stringify({ token: localStorage.getItem('token') })
 		});
 
 		if (response.ok) {

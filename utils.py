@@ -34,4 +34,4 @@ def fetch_user_languages(auth_token: str) -> List[str]:
         unique_languages.keys(), key=lambda x: x[1], reverse=True
     )
 
-    return unique_languages_list
+    return ["python", "rust", "css"]

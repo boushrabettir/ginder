@@ -1,10 +1,16 @@
 <script lang="ts">
-    // import dotenv from 'dotenv';
+ 
+    // let CLIENT_ID = "";
 
-    // const CLIENT_ID = process.env.CLIENT_ID || '';
-    const TEMP = "";
+    // const get_id = async () => {
+    //         const response = await fetch("./ginder/src/api/clientid.ts");
+    //         const data = await response.json();
+    //         CLIENT_ID = data["data"];
+    // }
+   
     const login_with_github = () => {
-        window.location.assign(`https://github.com/login/oauth/authorize?client_id=${TEMP}`)
+        let CLIENT_ID ="f4b411c4d7b6b50ef40e";
+        window.location.assign(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`)
     }
 </script>
 
@@ -22,64 +28,89 @@
 
 
   <body>
-    <div class="container">
-        <div class="title-section">
-            <p class="subtitle" id="welcome">Welcome to...</p>
-            <p class="title" id="ginder">ginder</p>
-            <p class="subtitle" id="welcome">Effortless connection and collaboration with a <span id="blue-text">simple</span> swipe.</p>
-        </div>
-        <button on:click={login_with_github}>
-            👾 Login through Github 🤖
-        </button>
-    </div>
    
-
+    <div class="middle">
+        <div class="container">
+            <div class="title-section">
+                <p class="subtitle" id="welcome">Welcome to...</p>
+                <p class="title" id="ginder">ginder</p>
+                <p class="subtitle" id="welcome">Effortless connection and<br/> collaboration with a <span id="blue-text">simple</span> swipe.</p>
+        
+                <button class="pop-up" on:click={login_with_github}>
+                    👾 Login through Github 🤖
+                </button>
+            </div>
       
+        </div>
+        <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by6">
+                <img src="./photos/github.png" alt="Placeholder ">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <p class="subtitle is-4">
+                    <span>Jeffery Thompsan</span> • @jeffery_12<br/>
+                    <span>Followers:</span> 1.1k
+                  </p>
+                  <button id="dummy-button">+ Follow</button>
+                </div>
+              </div>
+          
+              <div class="content">
+                <p class="title is-3">BEARTEAR</p>
+                <p class = "subtitle is-5 dummy-sub">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.<br/>
+                    🔤 Languages: Rust, TypeScript<br/>
+                    ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Commits: 39
+                </p>
+                <button class="dummy-view">
+                    View Here!
+                </button>
+              </div>
+            </div>
+          </div>
+    </div>
+ 
 </body>
 </html>
-<!-- 
+
 <style>
 :global(body) {
     background: linear-gradient(to bottom right, #11111b, #383843, #171721);
-    height: 100vh;
-    margin: 0;
+    height: 100%;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 * {
     font-family: "Poppins", sans-serif;
 }
 
-body {
+.middle {
+    display: flex;
     align-items: center;
-    align-content: center;
-    margin: 0;
-    padding: 0 12rem; /* Adjust the padding-left and padding-right */
+    justify-content: center; /* Center horizontally */
+    height: 100vh; /* This will make .middle take the full viewport height */
+    margin-left: 12rem;
+    margin-right: 2rem;
 }
 
-.container {
-    margin-bottom: 3rem;
-}
 
 .title-section p {
     color: white;
-    margin: 0.5rem 0;
 }
 
-.title-section #ginder {
-    letter-spacing: 0.5rem;
+.title-section .title {
     font-size: 5rem;
-    margin: 0;
+    letter-spacing: 0.5rem;
 }
 
-.title-section #welcome {
-    text-transform: uppercase;
+.title-section .subtitle {
     font-size: 2.5rem;
-    line-height: 3.5rem;
-    margin: 0;
+    padding: 0.5rem 0;
+    text-transform: uppercase;
 }
 
 #blue-text {
@@ -87,64 +118,70 @@ body {
     color: #89CEFF;
 }
 
-#button-color {
-    background-color: #89CEFF;
-    border: none;
-    box-shadow: 0 0 2rem rgb(14, 14, 14);
-    font-weight: 600;
-    color: #1D1D27;
-    font-size: 1.2rem;
-    margin-top: 2rem;
+.card, figure img {
+    border-radius: 1rem;
 }
-
 .card {
     
-    transform: perspective(20px) rotateZ(0.5deg) rotateY(-0.7deg) scale(0.7) translateX(5rem);
-    box-shadow: 0.5rem 0.5rem 1rem rgb(21, 21, 21);
-    background-color: #222222;
-    z-index: 2;
+    animation: bobble 4s infinite;
+    box-shadow: 0 0rem 3rem rgb(19, 19, 19);
 }
 
-.c2 {
-    transform: perspective(20px) rotateZ(0.5deg) rotateY(-0.7deg) scale(0.7) translateX(-15rem);
-    z-index: 1;
+@keyframes bobble {
+    
+  0% {
+    transform: translateY(10px) translateX(-3px) perspective(10px) rotateZ(0.5deg) rotateY(-0.3deg) scale(0.55);
+  }
+  50% {
+    transform: translateY(-5px) translateX(3px) perspective(10px) rotateZ(0.5deg) rotateY(-0.3deg) scale(0.55);
+  }
+  100% {
+    transform: translateY(10px) translateX(-3px) perspective(10px) rotateZ(0.5deg) rotateY(-0.3deg) scale(0.55);
+  }
 }
 
-.card, #follow-button, #user-info, .media p, #stats {
-    color: #FFFFFF;
-}
-
-#follow-button {
-    background-color: #1D1D27;
+.pop-up {
+    background-color: #89CEFF;
     border: none;
-    margin-top: 0.4rem;
-    font-size: 1.1rem;
-    padding: 0.5rem 3rem;
-    border-radius: 0.4rem;
-}
-
-#bolded {
-    font-weight: 800;
-}
-
-#user-info {
-    background-color: #9e9e9e;
-    padding: 1rem;
+    padding: 0.8rem;
     font-size: 1.2rem;
+    border-radius: 0.3rem;
+    box-shadow: 0 0 1rem rgb(26, 26, 26);
+    font-weight: 600;
+    color: #1D1D27;
+    cursor: pointer;
+    transition: ease 100ms all;
+}
+
+.pop-up:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 2rem rgb(26, 26, 26);
+}
+
+#dummy-button {
+    background-color: #1D1D27;
+    color: white;
+    border: none;
+    padding: 0.5rem 3rem;
+}
+
+.content, .media-content {
     text-align: center;
+    
 }
 
-.media-content p {
-    border-bottom: solid 2px rgba(255, 255, 255, 0.436);
-    text-align: center;
+.dummy-view {
+    border: none;
+    background-color: #89CEFF;
+    padding: 0.5rem 5rem;
+    font-size: 1rem;
+    border-radius: 15rem;
+    box-shadow: 0 0 0.5rem rgba(40, 40, 40, 0.557);
 }
 
-.content {
-    text-align: center;
+.dummy-sub {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
-#stats {
-   margin-top: 0.7rem;
-}
-
-</style> -->
+</style>

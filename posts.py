@@ -113,7 +113,9 @@ def retrieve_top_repo_languages(repository) -> List[str]:
 
     languages_data = repository.get_languages()
 
-    all_languages = sorted(languages_data.keys(), key=lambda x: x[1], reverse=True)
+    all_languages = sorted(
+        languages_data.keys(), key=lambda x: languages_data[x], reverse=True
+    )
     all_languages = all_languages[:3]
 
     return all_languages

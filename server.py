@@ -70,17 +70,20 @@ def get_data() -> List[Dict[str, any]] | None:
         return jsonify({"error": "Invalid response, please try again."}), 500
 
 
-@app.route("/get_projects", methods=["GET"])
+@app.route("/get_projects", methods=["POST", "GET"])
 def get_projects():
     """Retrieves the projects list from Github API"""
 
     # Retrieves token from front end post request
-    post_rq_data = request.get_json()
-    token = post_rq_data.get("token")
+    if request.method == "POST":
+        post_rq_data = request.get_json()
+        token = post_rq_data.get("token")
 
-    top_languages = fetch_user_languages(token)
+    top_languages = fetch_user_languages("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")
 
-    github_projects = request_github_projects(top_languages, token)
+    github_projects = request_github_projects(
+        top_languages, "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"
+    )
 
     seralized_data = [
         {
