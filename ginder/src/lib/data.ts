@@ -1,6 +1,6 @@
 import type { User } from '$lib/interface';
 
-export let user_data: any = {};
+export let user_data: Object = {};
 
 /**
  * retrieve_code_value retrieves the oauth code from the URL
@@ -66,11 +66,13 @@ export const retrieve_user_data = async () => {
 			const object: any = JSON.parse(data);
 
 			if (data) {
-				user_data = {
-					avatar_url: object['avatar_url'],
-					username: object['login']
-				};
-				localStorage.setItem('user-data', JSON.stringify(user_data));
+				localStorage.setItem(
+					'user-data',
+					JSON.stringify({
+						avatar_url: object['avatar_url'],
+						username: object['login']
+					})
+				);
 			}
 		} else {
 			console.error(`Error with response: ${response.status}`);
@@ -78,6 +80,8 @@ export const retrieve_user_data = async () => {
 	} catch (error) {
 		console.error(`Error fetching data: ${error}`);
 	}
+
+	user_data = JSON.stringify(localStorage.getItem('user-data'));
 };
 
 /**
