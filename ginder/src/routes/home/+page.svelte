@@ -21,7 +21,6 @@
 
     curr = pop_new_project();
   
-
     /**
      * Determines whether or not new data should be added
      * into the list
@@ -59,7 +58,7 @@
 </html>
 <p>You logged in!</p>
 
-<p>ginder | @{user_data["username"]}</p>
+<p>@{user_data["username"]}</p>
 <img src={user_data["avatar_url"]} alt="Github profile" />
 
 {#if curr}

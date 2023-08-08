@@ -1,7 +1,5 @@
-from github import Github
-from github import Auth
+from github import Github, Auth
 from typing import List
-from itertools import islice
 
 
 def fetch_user_languages(auth_token: str) -> List[str]:
@@ -14,14 +12,13 @@ def fetch_user_languages(auth_token: str) -> List[str]:
 
     user = gh.get_user()
 
-    # https://www.geeksforgeeks.org/python-itertools-islice/#
+    for indx, repository in enumerate(user.get_repos(type="public")):
+        if indx == 10:
+            break
 
-    for repository in islice(user.get_repos(), 3):
         if repository.owner.login == user.login:
             all_languages = repository.get_languages()
-            all_languages = sorted(
-                all_languages.keys(), key=lambda x: x[1], reverse=True
-            )
+            all_languages = [key for key in all_languages.keys()]
 
             for lang in all_languages:
                 if lang not in unique_languages:
@@ -31,7 +28,7 @@ def fetch_user_languages(auth_token: str) -> List[str]:
 
     # Sort list again in descending order
     unique_languages_list = sorted(
-        unique_languages.keys(), key=lambda x: x[1], reverse=True
+        unique_languages.keys(), key=lambda x: unique_languages[x], reverse=True
     )
 
-    return ["python", "rust", "css"]
+    return unique_languages_list

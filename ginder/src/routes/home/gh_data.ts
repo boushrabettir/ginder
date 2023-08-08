@@ -80,9 +80,11 @@ export const retrieve_next_project_group = async () => {
 
 			const in_session_projects = JSON.parse(localStorage.getItem('projects') || '[]');
 
-			in_session_projects.push(next_group);
+			in_session_projects.push(...next_group);
 
 			localStorage.setItem('projects', JSON.stringify(in_session_projects));
+
+			localStorage.removeItem('right-swipes');
 		}
 	} catch (error) {
 		console.error(`Error fetching data: ${error}`);

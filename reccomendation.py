@@ -8,12 +8,12 @@ import json
 
 
 def compute_cosine_similarity(right_swipes: List[object]) -> object:
-    """Returns a dictionary with cosine similarity and a dictionary"""
+    """Returns cosine similarity based on right-swipes"""
 
     # Holds desciption for each project
     description_holder = []
 
-    in_session_right_swipes = json.loads(right_swipes)
+    in_session_right_swipes = eval(right_swipes)
 
     for project in in_session_right_swipes:
         description_holder.append(project["desc"])
@@ -25,13 +25,7 @@ def compute_cosine_similarity(right_swipes: List[object]) -> object:
 
     cosine_sim = cosine_similarity(matrix, matrix)
 
-    # Holds key/pair value where key is a number, value is the description
-    project_to_indices = dict()
-
-    for indx, description in enumerate(description_holder):
-        project_to_indices[indx] = description
-
-    return {"indices": project_to_indices, "cosine_similarity": cosine_sim}
+    return cosine_sim
 
 
 def get_filtered_reccomendation(
@@ -49,40 +43,27 @@ def get_filtered_reccomendation(
         USER_LANGUAGES, token
     )
 
-    data = compute_cosine_similarity(right_swipes)
-
-    # Holds object and numpy array in seperate variables
-    indices = data["indices"]
-    cos_similarity = data["cosine_similarity"]
+    cos_similarity = compute_cosine_similarity(right_swipes)
 
     # Holds the filtered reccomendation list
     filtered_list_reccomendation: List[OpenSource] = []
 
-    for i, project in enumerate(new_unfiltered_project_list):
-        if project.description in indices:
-            indx = indices[i]
-            similarity_score = cos_similarity[indx]
-
+    for i, _ in enumerate(new_unfiltered_project_list):
+        if i in cos_similarity:
+            similarity_score = cos_similarity[i]
             # Holds tuples for similarity - E.g. [(0, 0.85), (1, 0.76), (2, 0.92)]
             similar_project_score = []
 
-            for i, score in enumerate(similarity_score):
-                if i != indx:
-                    similar_project_score.append((i, score))
+            for j, score in enumerate(similarity_score):
+                if j != i:
+                    similar_project_score.append((j, score))
 
-            # Sort list to priotize list from most important to least based on score
+            # Sort list to prioritize projects from most important to least based on score
             similar_project_score = sorted(
-                similar_project_score, key=lambda x: x[1], reversed=True
+                similar_project_score, key=lambda x: x[1], reverse=True
             )
-
-            filtered_list_reccomendation.append(
-                [
-                    new_unfiltered_project_list[i]
-                    for i in range(len(similar_project_score))
-                ]
+            open_source_utilizer.open_source_list.append(
+                [new_unfiltered_project_list[idx] for idx, _ in similar_project_score]
             )
-
-    # Add filtered list in our utilizer
-    open_source_utilizer.open_source_list.append(filtered_list_reccomendation)
 
     return open_source_utilizer.open_source_list

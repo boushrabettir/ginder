@@ -82,7 +82,7 @@ def get_projects():
     top_languages = fetch_user_languages(token)
 
     github_projects = request_github_projects(top_languages, token)
-
+    print(github_projects)
     seralized_data = [
         {
             "id": data.id,
@@ -116,7 +116,7 @@ def get_next_group():
         right_swipes_data = post_rq_data.get("data")
         token = post_rq_data.get("token")
 
-    filtered_reccomendation = get_filtered_reccomendation(right_swipes_data, token)
+    filtered_reccomendation = get_filtered_reccomendation(right_swipes_data, token)[0]
     print(filtered_reccomendation)
     serialized_data = [
         {

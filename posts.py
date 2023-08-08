@@ -168,7 +168,6 @@ def request_github_projects(
             contributers,
         )
 
-        print(open_source_project)
         # Add current object to the finalized list
         open_source_utilizer.open_source_list.append(open_source_project)
 
