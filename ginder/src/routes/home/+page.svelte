@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { user_data, local_storage_hold, retrieve_user_data, pop_new_project } from "$lib/data";
   import { retrieve_next_project_group } from './gh_data';
+  import "../../app.css";
 
   let curr: any;
 
@@ -69,7 +70,7 @@
 
     <div class="container">
       <div class="post">
-        <img src="/photos/github.png">
+        <img src="/photos/github.png" alt="Github portfolio">
         <p><span id="bolded">thedaviddias/Front-End-Checklist •</span> thedaviddias</p>
         <button>+ Follow</button>
         <p id="title">Front-End-Checklist</p>
@@ -95,13 +96,16 @@
 </body>
 </html>
 
-<style>
+<style lang="postcss">
 
-
+  :global(html) {
+    background-color: theme(colors.gray.100);
+  }
+  
   * {
       font-family: "Poppins", sans-serif;  
   }
-  #circle-img {
+  /* #circle-img {
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -147,7 +151,7 @@
   .container {
    width: 30rem;
     
-  }
+  } */
 
 </style>
 
