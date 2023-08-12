@@ -45,9 +45,6 @@ def get_filtered_reccomendation(
 
     cos_similarity = compute_cosine_similarity(right_swipes)
 
-    # Holds the filtered reccomendation list
-    filtered_list_reccomendation: List[OpenSource] = []
-
     for i, _ in enumerate(new_unfiltered_project_list):
         if i in cos_similarity:
             similarity_score = cos_similarity[i]

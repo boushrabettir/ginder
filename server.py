@@ -117,7 +117,7 @@ def get_next_group():
         token = post_rq_data.get("token")
 
     filtered_reccomendation = get_filtered_reccomendation(right_swipes_data, token)[0]
-    print(filtered_reccomendation)
+
     serialized_data = [
         {
             "id": data.id,

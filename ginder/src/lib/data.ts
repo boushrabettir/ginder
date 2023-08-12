@@ -43,7 +43,7 @@ export const local_storage_hold = async () => {
 			}
 		};
 
-		retrieve_token();
+		await retrieve_token();
 	}
 };
 

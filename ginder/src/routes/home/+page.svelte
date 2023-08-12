@@ -41,7 +41,7 @@
 
   
   onMount(async () => {
-    local_storage_hold();
+    await local_storage_hold();
 
     await retrieve_user_data();
     
@@ -59,7 +59,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ginder</title>
   </head>
-
 
   <body>
     <div class="header">
