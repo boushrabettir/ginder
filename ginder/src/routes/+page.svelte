@@ -8,6 +8,7 @@
     //         CLIENT_ID = data["data"];
     // }
    
+    import "../app.css";
     const login_with_github = () => {
         let CLIENT_ID ="f4b411c4d7b6b50ef40e";
         window.location.assign(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`)
@@ -19,6 +20,7 @@
 <html lang="en">
   <meta charset="utf-8">
   <head>
+  
     <link href="/dist/output.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="ginder\static\root.css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,56 +30,59 @@
 
 
   <body>
-   
-    <div class="middle">
-        <div class="container">
+  
+    <div class="middle flex flex-nowrap justify-center items-center mx-auto max-w-7xl">
+        <div class="container selection:bg-sky-300 selection:text-sky-700">
             <div class="title-section">
                 <p class="subtitle" id="welcome">Welcome to...</p>
-                <p class="title" id="ginder">ginder</p>
-                <p class="subtitle" id="welcome">Effortless connection and<br/> collaboration with a <span id="blue-text">simple</span> swipe.</p>
+                <p class="text-7xl font-bold title" id="ginder">ginder</p>
+                <p class="subtitle" id="welcome">Effortless connection and collaboration with a <span class="text-sky-300 italic">simple</span> swipe.</p>
         
-                <button class="pop-up" on:click={login_with_github}>
-                    👾 Login through Github 🤖
+                <button class="pop-up bg-gradient-to-r from-cyan-500 to-sky-500 hover:bg-sky-400 ease-out duration-300 hover:scale-110 font-bold rounded-md text-1xl p-3" on:click={login_with_github}>
+                  🤖 Login through Github 👾
                 </button>
             </div>
-      
         </div>
-        <div class="card">
-            <div class="card-image">
-              <figure class="image is-4by6">
-                <img src="./photos/github.png" alt="Placeholder ">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="subtitle is-4">
-                    <span>Jeffery Thompsan</span> • @jeffery_12<br/>
-                    <span>Followers:</span> 1.1k
-                  </p>
-                  <button id="dummy-button">+ Follow</button>
-                </div>
+
+        <div class="card rounded-md select-none text-slate-200 text-center">
+            
+            <div class="media bg-zinc-400 p-2 rounded-t-md">
+              <div class="flex justify-center">
+                <img src="./photos/github.png" alt="Placeholder " class="w-full rounded-md">
               </div>
-          
-              <div class="content">
-                <p class="title is-3">BEARTEAR</p>
-                <p class = "subtitle is-5 dummy-sub">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.<br/>
-                    🔤 Languages: Rust, TypeScript<br/>
-                    ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Commits: 39
+         
+              <p class=" text-slate-950 text-center inline-block text-xs align-middle mt-2">
+                @jeffery_12 • <span class="font-bold">Followers:</span> 1.1k
+              </p>
+              
+            </div>
+            
+            <div class="card-content ml-5 mr-5">
+  
+              <div class="content mt-2">
+                <p class="text-2xl">BEARTEAR</p>
+                <p class = "text-1xl mb-2 text-xs">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
                 </p>
-                <button class="dummy-view">
+                <p class="border-b-2 border-neutral-600"></p>
+                <p class="mt-2 text-xs">
+                  🔤 Languages: Rust, TypeScript<br/>
+                  ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Commits: 39
+                </p>
+                <button class="rounded-md text-xs text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 mb-3 mt-2">
                     View Here!
                 </button>
               </div>
             </div>
           </div>
     </div>
- 
+
+    <p class = "text-center uppercase text-sky-300 mb-2 ">Created and maintained with 💙 by @boushrabettir</p>
 </body>
 </html>
 
-<style>
+
+<style type="postcss">
 :global(body) {
     background: linear-gradient(to bottom right, #11111b, #383843, #171721);
     height: 100%;
@@ -89,12 +94,8 @@
 }
 
 .middle {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center horizontally */
-    height: 100vh; /* This will make .middle take the full viewport height */
-    margin-left: 12rem;
-    margin-right: 2rem;
+    height: 100vh;
+  
 }
 
 
@@ -103,7 +104,6 @@
 }
 
 .title-section .title {
-    font-size: 5rem;
     letter-spacing: 0.5rem;
 }
 
@@ -113,16 +113,8 @@
     text-transform: uppercase;
 }
 
-#blue-text {
-    font-style: italic;
-    color: #89CEFF;
-}
-
-.card, figure img {
-    border-radius: 1rem;
-}
 .card {
-    
+
     animation: bobble 4s infinite;
     box-shadow: 0 0rem 3rem rgb(19, 19, 19);
 }
@@ -130,58 +122,20 @@
 @keyframes bobble {
     
   0% {
-    transform: translateY(10px) translateX(-3px) perspective(10px) rotateZ(0.5deg) rotateY(-0.3deg) scale(0.55);
+    transform: translateY(10px) translateX(-3px) perspective(5px) rotateY(-0.3deg) scale(1);
   }
   50% {
-    transform: translateY(-5px) translateX(3px) perspective(10px) rotateZ(0.5deg) rotateY(-0.3deg) scale(0.55);
+    transform: translateY(-5px) translateX(3px) perspective(5px) rotateY(-0.3deg) scale(1);
   }
   100% {
-    transform: translateY(10px) translateX(-3px) perspective(10px) rotateZ(0.5deg) rotateY(-0.3deg) scale(0.55);
+    transform: translateY(10px) translateX(-3px) perspective(5px) rotateY(-0.3deg) scale(1);
   }
 }
 
 .pop-up {
-    background-color: #89CEFF;
-    border: none;
-    padding: 0.8rem;
-    font-size: 1.2rem;
-    border-radius: 0.3rem;
     box-shadow: 0 0 1rem rgb(26, 26, 26);
-    font-weight: 600;
     color: #1D1D27;
-    cursor: pointer;
-    transition: ease 100ms all;
 }
 
-.pop-up:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 2rem rgb(26, 26, 26);
-}
-
-#dummy-button {
-    background-color: #1D1D27;
-    color: white;
-    border: none;
-    padding: 0.5rem 3rem;
-}
-
-.content, .media-content {
-    text-align: center;
-    
-}
-
-.dummy-view {
-    border: none;
-    background-color: #89CEFF;
-    padding: 0.5rem 5rem;
-    font-size: 1rem;
-    border-radius: 15rem;
-    box-shadow: 0 0 0.5rem rgba(40, 40, 40, 0.557);
-}
-
-.dummy-sub {
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
 
 </style>
