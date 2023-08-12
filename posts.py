@@ -8,7 +8,7 @@ import random
 MAX_LANGUAGE_LENGTH = 3
 
 # Holds the max amount of github projects
-MAX_GH_PROJECT_LENGTH = 15
+MAX_GH_PROJECT_LENGTH = 21
 
 
 @dataclass
@@ -172,8 +172,8 @@ def request_github_projects(
 
         # Increase to the next language if there is an even amount
         if (
-            len(open_source_utilizer.open_source_list) / 5
-            == len(open_source_utilizer.open_source_list) // 5
+            len(open_source_utilizer.open_source_list) / 7
+            == len(open_source_utilizer.open_source_list) // 7
         ):
             indx += 1
 
