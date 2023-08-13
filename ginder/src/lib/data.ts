@@ -1,6 +1,7 @@
 import type { User } from '$lib/interface';
+import { writable } from 'svelte/store';
 
-export let user_data: any = {};
+export let user_data: any = writable();
 
 /**
  * retrieve_code_value retrieves the oauth code from the URL
@@ -73,10 +74,10 @@ export const retrieve_user_data = async () => {
 				);
 
 				// Update user_data immediately after setting in localStorage
-				user_data = {
+				user_data.set({
 					avatar_url: object['avatar_url'],
 					username: object['login']
-				};
+				});
 
 				console.log(user_data);
 			}

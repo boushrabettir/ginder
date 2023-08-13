@@ -3,9 +3,10 @@
   import { user_data, local_storage_hold, retrieve_user_data, pop_new_project } from "$lib/data";
   import { retrieve_next_project_group } from './gh_data';
   import "../../app.css";
-
+  import Swipe from '$lib/components/Swipe/Swipe.svelte';
   let curr: any;
 
+  
   /**
    * right adds the next data object to the right swipes
    * for the reccomendation system and retrieves the next block
@@ -38,46 +39,68 @@
   const left = () => {
     curr = pop_new_project();
   }
-
   
+  let userData: any;
+  let isDataLoaded = false;
+
   onMount(async () => {
     await local_storage_hold();
 
     await retrieve_user_data();
     
+    const unsuscribe = user_data.subscribe((v) => {
+      userData = v;
+      isDataLoaded=true;
+    });
+    console.log(userData);
+
     curr = pop_new_project();
 
-    console.log(user_data);
-  });
+    return unsuscribe;
 
+  });
+  
 </script>
 
 <html lang="en">
   <meta charset="utf-8">
   <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link href="/dist/output.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ginder</title>
   </head>
 
   <body>
-    <div class="header">
-      <h1>ginder | <span id="user-img"><img src="/photos/boush.png" alt="Github profile" id="circle-img"/>@{user_data["username"]}</span></h1>
+    <div class="text-white flex justify-between ml-5 mr-5">
+      <h1 class="flex inline-block align-middle ">ginder | 
+        
+          
+          {#if isDataLoaded}
+            <img src={userData["avatar_url"]} alt="Github profile" class=" inline-block align-middle h-24 w-24 scale-50 rounded-full"/>
+            {userData["username"]}
+          {:else}
+            <p>Loading in your data..</p>
+          {/if}
+    
+      </h1>
       <p>Like it? Swipe right. Don’t? Swipe left. It’s that simple.</p>
-      <h1>Logout</h1>
+      <h1>Logout </h1>
+   
     </div>
 
-    <div class="container">
+ 
+ 
+    <!-- <div class="container">
       <div class="post">
         <img src="/photos/github.png" alt="Github portfolio">
-        <p><span id="bolded">thedaviddias/Front-End-Checklist •</span> thedaviddias</p>
+        <p><span id="bolded" class="text-white">thedaviddias/Front-End-Checklist •</span> thedaviddias</p>
         <button>+ Follow</button>
         <p id="title">Front-End-Checklist</p>
         <p id="subtext">🗂 The perfect Front-End Checklist for modern websites and meticulous developers</p>
         <p id="stats">🔤 <span id="bolded">Languages:</span> Python,Makefile</p>
         <p id="stats">⭐<span id="bolded">Stargazers:</span> 65819 • 📥<span id="bolded">Forks:</span> 6337 • 📝<span id="bolded">Contributers:</span> 116</p>
         <a href="/" id="view">View here!</a>
-      </div>
+      </div> -->
     <!-- {#if curr}
 
       <p>{curr["owner"]} • {curr["username"]}</p>
@@ -87,22 +110,33 @@
       <p>Languages: {curr["languages"]}</p>
       <p>Stargazers: {curr["stars"]} • Forks: {curr["forks"]} • Contributers: {curr["contributers"]}</p>
     {/if} -->
-
-      <button on:click={left}>{'<'}</button>
-      <button on:click={right}>{'>'}</button>
-    </div>
+      <!-- <button >{'<'}</button>
+      <button >{'>'}</button> -->
+      <!-- <button on:click={left}>{'<'}</button>
+      <button on:click={right}>{'>'}</button> -->
+    <!-- </div> -->
+    
+ 
+    <Swipe/>
 
 </body>
 </html>
 
 <style lang="postcss">
-
- 
+  html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+  }
+  body {
+      background: linear-gradient(to bottom right, #11111b, #383843, #171721);
+  }
   
   * {
-      font-family: "Poppins", sans-serif;  
+    font-family: "Poppins", sans-serif;  
   }
-  /* #circle-img {
+
+  #circle-img {
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -110,45 +144,6 @@
     vertical-align: middle;
   }
 
-  h1 {
-    font-size: 2rem;
-    font-weight: 600;
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1rem;
-  }
-  
-  #user-img {
-    font-size: 1.2rem;
-  }
-  
-  .container {
-    text-align: center;
-  }
-
-  #bolded {
-    font-weight: 600;
-  }
-
-  #title {
-    text-transform: uppercase;
-    font-weight: 800;
-    font-size: 1.5rem;
-  }
-
-  .post {
-    background-color: #222222;
-    color: white;
-    padding: 3rem;
-  }
-  .container {
-   width: 30rem;
-    
-  } */
-
+ 
 </style>
 

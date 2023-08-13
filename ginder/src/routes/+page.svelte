@@ -43,7 +43,7 @@
                 </button>
             </div>
         </div>
-
+        <div class="card"></div>
         <Post />
     </div>
 
@@ -81,6 +81,25 @@
     font-size: 2.5rem;
     padding: 0.5rem 0;
     text-transform: uppercase;
+}
+
+.card {
+
+    animation: bobble 4s infinite;
+
+}
+
+@keyframes bobble {
+
+0% {
+transform: translateY(10px) translateX(-3px) perspective(5px) rotateY(-0.3deg) scale(1);
+}
+50% {
+transform: translateY(-5px) translateX(3px) perspective(5px) rotateY(-0.3deg) scale(1);
+}
+100% {
+transform: translateY(10px) translateX(-3px) perspective(5px) rotateY(-0.3deg) scale(1);
+}
 }
 
 </style>
