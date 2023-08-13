@@ -7,17 +7,17 @@
     <link href="/dist/output.css" rel="stylesheet">
 </head>
 
-<div class="card rounded-md select-none text-slate-200 text-center">
+<div class="card shadow-2xl rounded-md select-none text-slate-200 text-center">
             
-    <div class="media bg-zinc-400 p-2 rounded-t-md">
+    <div class="media rounded-t-md">
       <div class="flex justify-center">
-        <img src="./photos/github.png" alt="Placeholder " class="w-full rounded-md">
+        <img src="./photos/github.png" alt="Placeholder " class="w-full rounded-t-lg">
       </div>
  
-      <p class=" text-slate-950 text-center inline-block text-xs align-middle mt-2">
+      <p class=" text-slate-950 text-center inline-block text-xs align-middle mt-2 absolute z-10 left-1/2 top-0 bg-neutral-900 text-white  p-2 rounded-full -translate-x-1/2 w-max shadow-xl">
         @jeffery_12 • <span class="font-bold">Followers:</span> 1.1k
       </p>
-      
+     
     </div>
     
     <div class="card-content ml-5 mr-5">
@@ -32,7 +32,7 @@
           🔤 Languages: Rust, TypeScript<br/>
           ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Commits: 39
         </p>
-        <button class="rounded-md text-xs text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 mb-3 mt-2">
+        <button class="pointer-events-none rounded-md text-xs text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 mb-3 mt-2">
             View Here!
         </button>
       </div>
@@ -45,7 +45,7 @@
 .card {
 
     animation: bobble 4s infinite;
-    box-shadow: 0 0rem 3rem rgb(19, 19, 19);
+  
 }
 
 @keyframes bobble {
