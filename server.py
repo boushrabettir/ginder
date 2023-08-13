@@ -89,7 +89,6 @@ def get_projects():
             "name": data.name,
             "desc": data.description,
             "link": data.link,
-            "owner": data.owner,
             "username": data.username,
             "languages": data.languages,
             "stars": data.stars,

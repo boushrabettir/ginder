@@ -118,6 +118,10 @@
     
  
     <Swipe/>
+    <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
+      <button on:click={left}>{'<'}</button>
+      <button on:click={right}>{'>'}</button>
+    </div>
 
 </body>
 </html>
