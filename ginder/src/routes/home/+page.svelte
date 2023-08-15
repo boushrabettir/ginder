@@ -2,8 +2,10 @@
   import { onMount } from 'svelte';
   import { user_data, local_storage_hold, retrieve_user_data, pop_new_project, determine_next_step } from "$lib/data";
   import { retrieve_next_project_group, add_project_to_stars } from './gh_data';
-  import "../../app.css";
   import Swipe from '$lib/components/Swipe/Swipe.svelte';
+  import Loading from '$lib/components/Loading/Loading.svelte';
+  import "../../app.css";
+  
 
   let curr: any;
   let data_user: any;
@@ -99,7 +101,7 @@
     </div>
 
  
-    {#if curr}
+    <!-- {#if curr}
       <Swipe
         username={curr["username"]}
         followers={curr["followers"]}
@@ -111,17 +113,14 @@
         contributers={curr["contributers"]}
         link={curr["link"]}
       />
-    {:else}
-      <div>
-        <h1>Hang in tight! Were retrieving a new batch of projects just for you!</h1>
-      </div>  
+    {:else} -->
+    <Loading />
+    <!-- {/if} -->
 
-    {/if}
-
-    <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
+    <!-- <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
       <button on:click={left}>{'<'}</button>
       <button on:click={right}>{'>'}</button>
-    </div>
+    </div> -->
 
 </body>
 </html>
