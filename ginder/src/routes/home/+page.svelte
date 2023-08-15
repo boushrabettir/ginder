@@ -140,6 +140,10 @@
         <button on:click={left}>{'<'}</button>
         <button on:click={right}>{'>'}</button>
       </div>
+
+      {#if curr["stars"] > 5000}
+        <p class="text-sky-300">There are over 5k stargazers...this project is off the moon!🚀🌙⭐</p>
+      {/if}
     {:else}
       <Loading />
     {/if}
