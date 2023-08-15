@@ -83,6 +83,9 @@
   }
   
 
+
+  determine_message(curr["stars"])
+
   onMount(async () => {
     await local_storage_hold();
 
@@ -92,8 +95,8 @@
       data_user = v;
       is_data_loaded=true;
     });
-    curr = pop_new_project();
 
+    curr = pop_new_project();
     return unsuscribe;
 
   });
@@ -142,6 +145,7 @@
         <button on:click={right}>{'>'}</button>
       </div>
 
+      <p class="text-center text-sky-300 text-sm">{final_response}</p>
       
     {:else}
       <Loading />
