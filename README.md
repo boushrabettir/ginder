@@ -1,14 +1,14 @@
 # ginder
 The go-to platform for developers offers effortless connection, collaboration, and GitHub repo stat tracking with a simple swipe.
 
-## To Do in Current Branch
-- [Design Document](https://docs.google.com/document/d/1-nUuOsQQT5YBtE3QhYoADdImZzg14-u4LagHyU-b3AI/edit)
 ## Usage
+Open up the link, and login through Github. *That* easy.
+
+## Tutorial
 ```
 foo
 ```
+
 ---
 
 Made with 💙 by [@boushrabettir](https://github.com/boushrabettir)
-
-*Contributions made by [@26samaahmed](https://github.com/26samaahmed)*
