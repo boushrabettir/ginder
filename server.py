@@ -9,6 +9,7 @@ import requests
 from posts import OpenSource
 from typing import List, Dict
 from urllib.parse import parse_qs
+import json
 
 # To load the .env file variables
 load_dotenv()
@@ -147,15 +148,16 @@ def add_to_stars() -> str | None:
 
     if request.method == "POST":
         post_rq_data = request.get_json()
-        project_data: List[object] = post_rq_data.get("data")
+        project_data: List[object] = json.loads(post_rq_data.get("data"))
         token = post_rq_data.get("token")
 
     if not token:
         return jsonify({"error": "No token given"}), 401
 
     headers = {"Authorization": f"Bearer {token}"}
-
+    print(project_data)
     for project in project_data:
+        print(project)
         owner = project["username"]
         repo_name = project["name"]
 
