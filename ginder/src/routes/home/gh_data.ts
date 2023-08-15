@@ -1,5 +1,3 @@
-// TODO - This appropriates 'DRY'. Refactor.
-
 export let projects: Object[] = [];
 export let top_user_languages: string[] = [];
 export let curr_project: Object = {};
@@ -71,7 +69,8 @@ export const retrieve_next_project_group = async () => {
 			},
 			body: JSON.stringify({
 				data: localStorage.getItem('right-swipes'),
-				token: localStorage.getItem('token')
+				token: localStorage.getItem('token'),
+				all: localStorage.getItem('all')
 			})
 		});
 

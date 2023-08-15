@@ -4,7 +4,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 from posts import OpenSource, OpenSourceUtilizer, request_github_projects
 from typing import List
 import utils as ut
-import json
 
 
 def compute_cosine_similarity(right_swipes: List[object]) -> object:

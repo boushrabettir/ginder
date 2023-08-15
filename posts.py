@@ -8,7 +8,7 @@ import random
 MAX_LANGUAGE_LENGTH = 3
 
 # Holds the max amount of github projects
-MAX_GH_PROJECT_LENGTH = 21
+MAX_GH_PROJECT_LENGTH = 18
 
 
 @dataclass
@@ -122,7 +122,7 @@ def retrieve_top_repo_languages(repository) -> List[str]:
 
 
 def request_github_projects(
-    user_languages: List[str], auth_token: str
+    user_languages: List[str], auth_token: str, all_swipes: set
 ) -> List[OpenSource]:
     """Requests Github Repository information"""
 
@@ -143,43 +143,44 @@ def request_github_projects(
     repositories = gh.search_repositories(f"topic:{query[indx]}")
 
     for repository in repositories:
-        id = repository.id
-        name = repository.name
-        description = repository.description
-        link = repository.html_url
-        username = repository.owner.login
-        languages = retrieve_top_repo_languages(repository)
-        stars = repository.stargazers_count
-        forks = repository.forks
-        contributers = repository.get_contributors(anon="true").totalCount
-        followers = repository.owner.get_followers().totalCount
+        if repository.id not in all_swipes:
+            id = repository.id
+            name = repository.name
+            description = repository.description
+            link = repository.html_url
+            username = repository.owner.login
+            languages = retrieve_top_repo_languages(repository)
+            stars = repository.stargazers_count
+            forks = repository.forks
+            contributers = repository.get_contributors(anon="true").totalCount
+            followers = repository.owner.get_followers().totalCount
 
-        # Create Open Source instance
-        open_source_project = OpenSource(
-            id,
-            name,
-            description,
-            link,
-            username,
-            languages,
-            stars,
-            forks,
-            contributers,
-            followers,
-        )
+            # Create Open Source instance
+            open_source_project = OpenSource(
+                id,
+                name,
+                description,
+                link,
+                username,
+                languages,
+                stars,
+                forks,
+                contributers,
+                followers,
+            )
 
-        # Add current object to the finalized list
-        open_source_utilizer.open_source_list.append(open_source_project)
+            # Add current object to the finalized list
+            open_source_utilizer.open_source_list.append(open_source_project)
 
-        # Continue adding more projects until the list is at max length
-        if len(open_source_utilizer.open_source_list) == MAX_GH_PROJECT_LENGTH:
-            break
+            # Continue adding more projects until the list is at max length
+            if len(open_source_utilizer.open_source_list) == MAX_GH_PROJECT_LENGTH:
+                break
 
-        # Increase to the next language if there is an even amount
-        if (
-            len(open_source_utilizer.open_source_list) / 7
-            == len(open_source_utilizer.open_source_list) // 7
-        ):
-            indx += 1
+            # Increase to the next language if there is an even amount
+            if (
+                len(open_source_utilizer.open_source_list) / 6
+                == len(open_source_utilizer.open_source_list) // 6
+            ):
+                indx += 1
 
     return open_source_utilizer.open_source_list

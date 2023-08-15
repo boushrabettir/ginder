@@ -15,7 +15,19 @@
    * right adds the next data object to the right swipes
    * for the reccomendation system and retrieves the next block
    */
+
+   //TODO Update so it doesnt appropriate DRY.
   const right = async () => {
+
+    if (localStorage.getItem("all") == null || localStorage.getItem("all") == undefined) {
+      localStorage.setItem("all", JSON.stringify([curr]));
+    } else {
+      let right_swipe_data = JSON.parse(localStorage.getItem("all") || "[]");
+      right_swipe_data.push(curr);
+      localStorage.setItem("all", JSON.stringify(right_swipe_data));
+      
+    }
+
     if (localStorage.getItem("stars") == null || localStorage.getItem("stars") == undefined) {
       localStorage.setItem("stars", JSON.stringify([curr]));
     } else {
@@ -31,6 +43,7 @@
 
     if (localStorage.getItem("right-swipes") == undefined || localStorage.getItem("right-swipes") == null) {
       localStorage.setItem("right-swipes", JSON.stringify([curr]));
+      
     } else {
       let right_swipe_data = JSON.parse(localStorage.getItem("right-swipes") || "[]");
       right_swipe_data.push(curr);
@@ -54,6 +67,16 @@
    * left retrieves the next data block
    */
   const left = async () => {
+    
+    if (localStorage.getItem("all") == null || localStorage.getItem("all") == undefined) {
+      localStorage.setItem("all", JSON.stringify([curr]));
+    } else {
+      let right_swipe_data = JSON.parse(localStorage.getItem("all") || "[]");
+      right_swipe_data.push(curr);
+      localStorage.setItem("all", JSON.stringify(right_swipe_data));
+      
+    }
+
     curr = pop_new_project();
     await determine_next_step();
   }
