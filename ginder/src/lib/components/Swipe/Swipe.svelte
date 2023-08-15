@@ -37,7 +37,7 @@
             🔤 Languages:{languages}<br/>
             ⭐ Stargazers: {stargazers} • 📥 Forks: {forks} • 📝 Contributers: {contributers}
           </p>
-          <a href={link} class="font-bold border-b-2 rounded-md text-md text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 shadow-2xl">
+          <a href={link} target="_blank" class="font-bold border-b-2 rounded-md text-md text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 shadow-2xl">
             View Here!
           </a>
         </div>

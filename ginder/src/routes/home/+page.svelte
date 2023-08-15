@@ -130,18 +130,24 @@
     
  
     {#if curr}
-  <Swipe
-    username={curr["username"]}
-    followers={curr["followers"]}
-    repo_title={curr["name"]}
-    description={curr["desc"]}
-    languages={curr["languages"]}
-    stargazers={curr["stars"]}
-    forks={curr["forks"]}
-    contributers={curr["contributers"]}
-    link={curr["link"]}
-  />
-{/if}
+      <Swipe
+        username={curr["username"]}
+        followers={curr["followers"]}
+        repo_title={curr["name"]}
+        description={curr["desc"]}
+        languages={curr["languages"]}
+        stargazers={curr["stars"]}
+        forks={curr["forks"]}
+        contributers={curr["contributers"]}
+        link={curr["link"]}
+      />
+    {:else}
+      <div>
+        <h1>Hang in tight! Were retrieving a new batch of projects just for you!</h1>
+      </div>  
+
+    {/if}
+
     <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
       <button on:click={left}>{'<'}</button>
       <button on:click={right}>{'>'}</button>

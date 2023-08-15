@@ -144,8 +144,6 @@ def get_next_group():
 def add_to_stars() -> str | None:
     """Add project to stars from local storage"""
 
-    # https://docs.github.com/en/rest/activity/starring?apiVersion=2022-11-28
-
     if request.method == "POST":
         post_rq_data = request.get_json()
         project_data: List[object] = json.loads(post_rq_data.get("data"))
@@ -155,12 +153,12 @@ def add_to_stars() -> str | None:
         return jsonify({"error": "No token given"}), 401
 
     headers = {"Authorization": f"Bearer {token}"}
-    print(project_data)
+
     for project in project_data:
-        print(project)
         owner = project["username"]
         repo_name = project["name"]
 
+        # https://docs.github.com/en/rest/activity/starring?apiVersion=2022-11-28
         request_url = f"https://api.github.com/user/starred/{owner}/{repo_name}"
         try:
             response = requests.put(request_url, headers=headers)
