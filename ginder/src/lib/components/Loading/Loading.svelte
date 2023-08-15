@@ -20,14 +20,11 @@
     font-family: "Poppins", sans-serif;  
   }
 
-/* .center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.center {
+   
     box-shadow: 0 0 1.2rem rgb(28, 28, 28);
    
-} */
+} 
 
 .container {
     animation: bounce 4s infinite;
