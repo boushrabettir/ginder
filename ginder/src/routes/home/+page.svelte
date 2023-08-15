@@ -108,20 +108,19 @@
   </head>
 
   <body>
-    <div class="text-white flex justify-between ml-5 mr-5">
-      <h1 class="flex inline-block align-middle ">
-        ginder |           
+    <div class="text-white flex justify-between items-center ml-14 mr-14">
+      <h1 class="flex items-center gap-0">
+          <span class="text-3xl">ginder |</span>        
           {#if is_data_loaded}
-            <img src={data_user["avatar_url"]} alt="Github profile" class=" inline-block align-middle h-24 w-24 scale-50 rounded-full"/>
-            {data_user["username"]}
+              <img src={data_user["avatar_url"]} alt="Github profile" class="h-24 w-24 scale-50 rounded-full"/>
+              <span >@{data_user["username"]}</span>
           {:else}
-            <p>Loading in your data...</p>
+              <p>Loading in your data...</p>
           {/if}
       </h1>
       <p>Like it? Swipe right. Don’t? Swipe left. It’s that simple.</p>
-      <h1>Logout </h1>
-   
-    </div>
+      <h1>Logout</h1>
+  </div>
 
  
     {#if curr && JSON.parse(localStorage.getItem("projects") || "[]").length > 0}

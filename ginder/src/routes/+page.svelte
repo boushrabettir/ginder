@@ -22,7 +22,6 @@
   <head>
   
     <link href="/dist/output.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="ginder\static\root.css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <title>ginder</title>
@@ -43,7 +42,7 @@
                 </button>
             </div>
         </div>
-        <div class="card"></div>
+            
         <Post />
     </div>
 
@@ -81,25 +80,6 @@
     font-size: 2.5rem;
     padding: 0.5rem 0;
     text-transform: uppercase;
-}
-
-.card {
-
-    animation: bobble 4s infinite;
-
-}
-
-@keyframes bobble {
-
-0% {
-transform: translateY(10px) translateX(-3px) perspective(5px) rotateY(-0.3deg) scale(1);
-}
-50% {
-transform: translateY(-5px) translateX(3px) perspective(5px) rotateY(-0.3deg) scale(1);
-}
-100% {
-transform: translateY(10px) translateX(-3px) perspective(5px) rotateY(-0.3deg) scale(1);
-}
 }
 
 </style>
