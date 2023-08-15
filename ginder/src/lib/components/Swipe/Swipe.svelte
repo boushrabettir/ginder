@@ -13,6 +13,17 @@
     export let contributers: number;
     export let link: string;
 
+
+
+    const format_large_numbers = (str_value: string) => {
+      let number_value = parseInt(str_value, 10);
+      if (number_value >= 1000) {
+        return `${(number_value / 1000).toFixed(1)}k`;
+      } else {
+        return number_value.toString();
+      }
+    }
+
 </script>
 
 <head>
@@ -24,7 +35,7 @@
 <div class="pb-5 w-96 shadow-2xl rounded-md mx-auto rounded-md text-slate-200 text-center ">
     <img src="./photos/github.png" alt="Placeholder" class=" flex justify-center rounded-t-lg">
     <p class="text-slate-950 text-center inline-block text-xs align-middle mt-32 absolute z-10 left-1/2 top-20 bg-neutral-900 text-white p-2 rounded-full -translate-x-1/2 w-max shadow-xl">
-      {username} • <span class="font-bold">Followers:</span> {followers}
+      {username} • <span class="font-bold">Followers:</span> {format_large_numbers(followers)}
     </p>
     <div class="card-content ml-3 mr-3">
         <div class="content mt-2">
@@ -35,7 +46,7 @@
           <p class="border-b-2 border-neutral-600"></p>
           <p class="mt-2 text-xs mb-3">
             🔤 Languages:{languages}<br/>
-            ⭐ Stargazers: {stargazers} • 📥 Forks: {forks} • 📝 Contributers: {contributers}
+            ⭐ Stargazers: {format_large_numbers(stargazers)} • 📥 Forks: {format_large_numbers(forks)} • 📝 Contributers: {format_large_numbers(contributers)}
           </p>
           <a href={link} target="_blank" class="font-bold border-b-2 rounded-md text-md text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 shadow-2xl">
             View Here!
