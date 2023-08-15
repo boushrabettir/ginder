@@ -101,7 +101,7 @@
     </div>
 
  
-    <!-- {#if curr}
+    {#if curr && JSON.parse(localStorage.getItem("projects") || "[]").length > 0}
       <Swipe
         username={curr["username"]}
         followers={curr["followers"]}
@@ -113,14 +113,16 @@
         contributers={curr["contributers"]}
         link={curr["link"]}
       />
-    {:else} -->
-    <Loading />
-    <!-- {/if} -->
 
-    <!-- <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
-      <button on:click={left}>{'<'}</button>
-      <button on:click={right}>{'>'}</button>
-    </div> -->
+      <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
+        <button on:click={left}>{'<'}</button>
+        <button on:click={right}>{'>'}</button>
+      </div>
+    {:else}
+      <Loading />
+    {/if}
+
+
 
 </body>
 </html>

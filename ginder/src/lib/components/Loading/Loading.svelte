@@ -21,9 +21,7 @@
   }
 
 .center {
-   
     box-shadow: 0 0 1.2rem rgb(28, 28, 28);
-   
 } 
 
 .container {
