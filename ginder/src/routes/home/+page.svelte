@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { user_data, local_storage_hold, retrieve_user_data, pop_new_project, determine_next_step } from "$lib/data";
   import { retrieve_next_project_group, add_project_to_stars } from './gh_data';
+  import { final_response, determine_message } from "./responses";
   import Swipe from '$lib/components/Swipe/Swipe.svelte';
   import Loading from '$lib/components/Loading/Loading.svelte';
   import "../../app.css";
@@ -141,9 +142,7 @@
         <button on:click={right}>{'>'}</button>
       </div>
 
-      {#if curr["stars"] > 5000}
-        <p class="text-sky-300">There are over 5k stargazers...this project is off the moon!🚀🌙⭐</p>
-      {/if}
+      
     {:else}
       <Loading />
     {/if}
