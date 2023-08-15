@@ -57,6 +57,9 @@ export const determine_message = (stargazers: number): string => {
 		case 2:
 			final_response = case_2[Math.floor(Math.random() * case_2.length)];
 			break;
+		default:
+			final_response = case_2[Math.floor(Math.random() * case_2.length)];
+			break;
 	}
 
 	return final_response;
