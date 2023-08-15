@@ -1,5 +1,6 @@
 import type { User } from '$lib/interface';
 import { writable } from 'svelte/store';
+import { retrieve_next_project_group } from '../routes/home/gh_data';
 
 export let user_data: any = writable();
 
@@ -99,4 +100,18 @@ export const pop_new_project = (): Object => {
 	localStorage.setItem('projects', JSON.stringify(local_data));
 
 	return curr;
+};
+
+/**
+ * determine_next_step determines whether or not to add extra
+ * projects if there exists less than 5 right swipes and
+ * the project list is less than 10
+ */
+export const determine_next_step = async () => {
+	let project_data = JSON.parse(localStorage.getItem('projects') || '[]');
+	let right_swipes = JSON.parse(localStorage.getItem('right-swipes') || '[]');
+
+	if (right_swipes?.length < 5 && project_data?.length == 10) {
+		await retrieve_next_project_group();
+	}
 };

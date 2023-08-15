@@ -119,7 +119,7 @@ def get_next_group():
 
     filtered_reccomendation: List[OpenSource] = get_filtered_reccomendation(
         right_swipes_data, token
-    )[0]
+    )
 
     serialized_data = [
         {

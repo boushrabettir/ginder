@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { user_data, local_storage_hold, retrieve_user_data, pop_new_project } from "$lib/data";
+  import { user_data, local_storage_hold, retrieve_user_data, pop_new_project, determine_next_step } from "$lib/data";
   import { retrieve_next_project_group, add_project_to_stars } from './gh_data';
   import "../../app.css";
   import Swipe from '$lib/components/Swipe/Swipe.svelte';
 
   let curr: any;
-
+  let data_user: any;
+  let is_data_loaded = false;
   
   /**
    * right adds the next data object to the right swipes
@@ -22,6 +23,7 @@
       
     }
 
+    // Adds projects to stars list on Github profile
     await add_project_to_stars();
 
 
@@ -35,25 +37,25 @@
 
     curr = pop_new_project();
   
-    /**
-     * Determines whether or not new data should be added
-     * into the list
-    */
+    // Determines whether or not new data should be added into the list 
     if (JSON.parse(localStorage.getItem("right-swipes") || "[]")?.length === 5) {
       retrieve_next_project_group();
+    } else {
+      await determine_next_step();
     }
+
+    
     
   }
 
   /**
    * left retrieves the next data block
    */
-  const left = () => {
+  const left = async () => {
     curr = pop_new_project();
+    await determine_next_step();
   }
   
-  let userData: any;
-  let isDataLoaded = false;
 
   onMount(async () => {
     await local_storage_hold();
@@ -61,11 +63,9 @@
     await retrieve_user_data();
     
     const unsuscribe = user_data.subscribe((v: any) => {
-      userData = v;
-      isDataLoaded=true;
+      data_user = v;
+      is_data_loaded=true;
     });
-    console.log(userData);
-
     curr = pop_new_project();
 
     return unsuscribe;
@@ -86,9 +86,9 @@
     <div class="text-white flex justify-between ml-5 mr-5">
       <h1 class="flex inline-block align-middle ">
         ginder |           
-          {#if isDataLoaded}
-            <img src={userData["avatar_url"]} alt="Github profile" class=" inline-block align-middle h-24 w-24 scale-50 rounded-full"/>
-            {userData["username"]}
+          {#if is_data_loaded}
+            <img src={data_user["avatar_url"]} alt="Github profile" class=" inline-block align-middle h-24 w-24 scale-50 rounded-full"/>
+            {data_user["username"]}
           {:else}
             <p>Loading in your data...</p>
           {/if}
@@ -132,7 +132,7 @@
       margin: 0;
       padding: 0;
   }
-  
+
   body {
       background: linear-gradient(to bottom right, #11111b, #383843, #171721);
   }
