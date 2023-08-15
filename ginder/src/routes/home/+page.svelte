@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { user_data, local_storage_hold, retrieve_user_data, pop_new_project } from "$lib/data";
-  import { retrieve_next_project_group } from './gh_data';
+  import { retrieve_next_project_group, add_project_to_stars } from './gh_data';
   import "../../app.css";
   import Swipe from '$lib/components/Swipe/Swipe.svelte';
+
   let curr: any;
 
   
@@ -11,12 +12,23 @@
    * right adds the next data object to the right swipes
    * for the reccomendation system and retrieves the next block
    */
-  const right = () => {
+  const right = async () => {
+    if (localStorage.getItem("stars") == null || localStorage.getItem("stars") == undefined) {
+      localStorage.setItem("stars", JSON.stringify([curr]));
+    } else {
+      let right_swipe_data = JSON.parse(localStorage.getItem("stars") || "[]");
+      right_swipe_data.push(curr);
+      localStorage.setItem("stars", JSON.stringify(right_swipe_data));
+      
+    }
+
+    await add_project_to_stars();
+
+
     if (localStorage.getItem("right-swipes") == undefined || localStorage.getItem("right-swipes") == null) {
       localStorage.setItem("right-swipes", JSON.stringify([curr]));
     } else {
       let right_swipe_data = JSON.parse(localStorage.getItem("right-swipes") || "[]");
-      console.log(right_swipe_data);
       right_swipe_data.push(curr);
       localStorage.setItem("right-swipes", JSON.stringify(right_swipe_data));
     }
@@ -48,7 +60,7 @@
 
     await retrieve_user_data();
     
-    const unsuscribe = user_data.subscribe((v) => {
+    const unsuscribe = user_data.subscribe((v: any) => {
       userData = v;
       isDataLoaded=true;
     });
@@ -117,7 +129,19 @@
     <!-- </div> -->
     
  
-    <Swipe/>
+    {#if curr}
+  <Swipe
+    username={curr["username"]}
+    followers={curr["followers"]}
+    repo_title={curr["name"]}
+    description={curr["desc"]}
+    languages={curr["languages"]}
+    stargazers={curr["stars"]}
+    forks={curr["forks"]}
+    contributers={curr["contributers"]}
+    link={curr["link"]}
+  />
+{/if}
     <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
       <button on:click={left}>{'<'}</button>
       <button on:click={right}>{'>'}</button>

@@ -90,3 +90,33 @@ export const retrieve_next_project_group = async () => {
 		console.error(`Error fetching data: ${error}`);
 	}
 };
+
+/**
+ * add_project_to_stars adds each project from local storage
+ * (right swipes) to the users Github stars list
+ */
+export const add_project_to_stars = async () => {
+	try {
+		let response = await fetch('http://127.0.0.1:5000/add_to_stars', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				data: localStorage.getItem('stars'),
+				token: localStorage.getItem('token')
+			})
+		});
+
+		if (response.ok) {
+			let gh_stars_projects = JSON.parse(localStorage.getItem('stars') || '[]');
+			if (gh_stars_projects && gh_stars_projects.length > 0) {
+				gh_stars_projects.pop();
+			}
+
+			localStorage.setItem('stars', JSON.stringify(gh_stars_projects));
+		}
+	} catch (error) {
+		console.error(`Error fetching endpoint to add GH star: ${error}`);
+	}
+};

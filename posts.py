@@ -24,7 +24,7 @@ class OpenSource:
     # Description
     description: str
 
-    # link to repository
+    # Link to repository
     link: str
 
     # Owners Username
@@ -41,6 +41,9 @@ class OpenSource:
 
     # Total open contributers
     contributers: int
+
+    # Total number of followers of user
+    followers: int
 
 
 @dataclass
@@ -149,6 +152,7 @@ def request_github_projects(
         stars = repository.stargazers_count
         forks = repository.forks
         contributers = repository.get_contributors(anon="true").totalCount
+        followers = repository.owner.get_followers().totalCount
 
         # Create Open Source instance
         open_source_project = OpenSource(
@@ -161,6 +165,7 @@ def request_github_projects(
             stars,
             forks,
             contributers,
+            followers,
         )
 
         # Add current object to the finalized list

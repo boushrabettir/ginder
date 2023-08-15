@@ -1,12 +1,12 @@
-from flask import Flask, send_from_directory, jsonify, request
+from flask import Flask, jsonify, request
 import os
 from dotenv import load_dotenv
 from posts import request_github_projects
 from reccomendation import get_filtered_reccomendation
-from posts import OpenSource
 from utils import fetch_user_languages
 from flask_cors import CORS
 import requests
+from posts import OpenSource
 from typing import List, Dict
 from urllib.parse import parse_qs
 
@@ -81,8 +81,8 @@ def get_projects():
 
     top_languages = fetch_user_languages(token)
 
-    github_projects = request_github_projects(top_languages, token)
-    print(github_projects)
+    github_projects: List[OpenSource] = request_github_projects(top_languages, token)
+
     seralized_data = [
         {
             "id": data.id,
@@ -94,6 +94,7 @@ def get_projects():
             "stars": data.stars,
             "forks": data.forks,
             "contributers": data.contributers,
+            "followers": data.followers,
         }
         for data in github_projects
     ]
@@ -115,7 +116,9 @@ def get_next_group():
         right_swipes_data = post_rq_data.get("data")
         token = post_rq_data.get("token")
 
-    filtered_reccomendation = get_filtered_reccomendation(right_swipes_data, token)[0]
+    filtered_reccomendation: List[OpenSource] = get_filtered_reccomendation(
+        right_swipes_data, token
+    )[0]
 
     serialized_data = [
         {
@@ -123,17 +126,48 @@ def get_next_group():
             "name": data.name,
             "desc": data.description,
             "link": data.link,
-            "owner": data.owner,
             "username": data.username,
             "languages": data.languages,
             "stars": data.stars,
             "forks": data.forks,
             "contributers": data.contributers,
+            "followers": data.followers,
         }
         for data in filtered_reccomendation
     ]
 
     return jsonify(serialized_data)
+
+
+@app.route("/add_to_stars", methods=["POST", "GET"])
+def add_to_stars() -> str | None:
+    """Add project to stars from local storage"""
+
+    # https://docs.github.com/en/rest/activity/starring?apiVersion=2022-11-28
+
+    if request.method == "POST":
+        post_rq_data = request.get_json()
+        project_data: List[object] = post_rq_data.get("data")
+        token = post_rq_data.get("token")
+
+    if not token:
+        return jsonify({"error": "No token given"}), 401
+
+    headers = {"Authorization": f"Bearer {token}"}
+
+    for project in project_data:
+        owner = project["username"]
+        repo_name = project["name"]
+
+        request_url = f"https://api.github.com/user/starred/{owner}/{repo_name}"
+        try:
+            response = requests.put(request_url, headers=headers)
+
+            if response.status_code == 204:
+                return "Project added successfully"
+
+        except requests.exceptions.RequestException as e:
+            return jsonify({"error": f"Error adding repo to Github stars list: {e}"})
 
 
 if __name__ == "__main__":
