@@ -14,7 +14,10 @@ export const retrieve_repositories = async (): Promise<Object[]> => {
 				'Content-Type': 'application/json'
 			},
 
-			body: JSON.stringify({ token: localStorage.getItem('token') })
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+				all: localStorage.getItem('all')
+			})
 		});
 
 		if (response.ok) {

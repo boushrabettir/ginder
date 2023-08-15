@@ -79,10 +79,13 @@ def get_projects():
     if request.method == "POST":
         post_rq_data = request.get_json()
         token = post_rq_data.get("token")
+        all_swipes = post_rq_data.get("all")
 
     top_languages = fetch_user_languages(token)
 
-    github_projects: List[OpenSource] = request_github_projects(top_languages, token)
+    github_projects: List[OpenSource] = request_github_projects(
+        top_languages, token, all_swipes
+    )
 
     seralized_data = [
         {
@@ -116,10 +119,11 @@ def get_next_group():
         post_rq_data = request.get_json()
         right_swipes_data = post_rq_data.get("data")
         token = post_rq_data.get("token")
+        all_swipes = post_rq_data.get("all")
 
     filtered_reccomendation: List[OpenSource] = get_filtered_reccomendation(
-        right_swipes_data, token
-    )
+        right_swipes_data, token, set(all_swipes)
+    )[0]
 
     serialized_data = [
         {

@@ -28,7 +28,7 @@ def compute_cosine_similarity(right_swipes: List[object]) -> object:
 
 
 def get_filtered_reccomendation(
-    right_swipes: List[object], token: str
+    right_swipes: List[object], token: str, all_swipes: set
 ) -> List[OpenSource]:
     """Retrieves filtered recommendation list"""
 
@@ -39,7 +39,7 @@ def get_filtered_reccomendation(
 
     # Retrieve new project list to be filtered out
     new_unfiltered_project_list: List[OpenSource] = request_github_projects(
-        USER_LANGUAGES, token
+        USER_LANGUAGES, token, all_swipes
     )
 
     cos_similarity = compute_cosine_similarity(right_swipes)

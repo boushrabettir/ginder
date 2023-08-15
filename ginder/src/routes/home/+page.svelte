@@ -83,8 +83,10 @@
   }
   
 
-
-  determine_message(curr["stars"])
+  if (curr) {
+    determine_message(curr["stars"]);
+  }
+  
 
   onMount(async () => {
     await local_storage_hold();
