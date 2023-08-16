@@ -5,6 +5,7 @@
   import { final_response, determine_message } from "./responses";
   import Swipe from '$lib/components/Swipe/Swipe.svelte';
   import Loading from '$lib/components/Loading/Loading.svelte';
+  import Notification from '$lib/components/Notification/Notification.svelte';
   import "../../app.css";
   
 
@@ -125,10 +126,10 @@
           {/if}
       </h1>
       <p>Like it? Swipe right. Don’t? Swipe left. It’s that simple.</p>
-      <h1>Logout</h1>
+
   </div>
 
- 
+    <Notification />
     {#if curr && JSON.parse(localStorage.getItem("projects") || "[]").length > 0}
       <Swipe
         username={curr["username"]}
@@ -166,7 +167,7 @@
   }
 
   body {
-      background: linear-gradient(to bottom right, #11111b, #383843, #171721);
+      background: linear-gradient(to bottom right, #11111b, #3d3d43, #171721);
   }
   
   * {
