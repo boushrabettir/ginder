@@ -130,6 +130,7 @@
   </div>
 
     <Notification />
+    
     {#if curr && JSON.parse(localStorage.getItem("projects") || "[]").length > 0}
       <Swipe
         username={curr["username"]}
