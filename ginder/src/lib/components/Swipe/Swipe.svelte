@@ -49,7 +49,7 @@
             🔤 Languages:{languages}<br/>
             ⭐ Stargazers: {format_large_numbers(stargazers)} • 📥 Forks: {format_large_numbers(forks)} • 📝 Contributers: {format_large_numbers(contributers)}
           </p>
-          <a href={link} target="_blank" class="font-bold border-b-2 rounded-md text-md text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 shadow-2xl">
+          <a href={link} target="_blank" class="font-bold border-b-2 rounded-md text-md text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 shadow-2xl ease-out duration-300 hover:scale-110">
             View Here!
           </a>
         </div>
