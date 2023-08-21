@@ -100,7 +100,7 @@
   <body class="selection:bg-sky-300 selection:text-sky-700">
     <div class="text-white flex justify-between items-center ml-14 mr-14">
       <h1 class="flex items-center gap-0">
-          <span class="text-3xl">ginder |</span>        
+          <span class="text-3xl font-bold">ginder |</span>        
           {#if is_data_loaded}
               <img src={data_user["avatar_url"]} alt="Github profile" class="h-24 w-24 scale-50 rounded-full"/>
               <span >@{data_user["username"]}</span>
@@ -108,7 +108,7 @@
               <p>Loading in your data...</p>
           {/if}
       </h1>
-      <p>Like it? Swipe right. Don’t? Swipe left. It’s that simple.</p>
+      <p class="font-bold">Like it? Swipe right. Don’t? Swipe left. It’s that simple.</p>
 
   </div>
 
