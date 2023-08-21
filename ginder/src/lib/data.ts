@@ -1,6 +1,6 @@
 import type { User } from '$lib/interface';
 import { writable } from 'svelte/store';
-import { retrieve_next_project_group } from '../routes/home/gh_data';
+import { retrieve_next_project_group, retrieve_repositories } from '../routes/home/gh_data';
 
 export let user_data: any = writable();
 
@@ -111,7 +111,11 @@ export const determine_next_step = async () => {
 	let project_data = JSON.parse(localStorage.getItem('projects') || '[]');
 	let right_swipes = JSON.parse(localStorage.getItem('right-swipes') || '[]');
 
-	if (right_swipes?.length < 5 && project_data?.length == 10) {
-		await retrieve_next_project_group();
+	if (project_data?.length == 10) {
+		if (right_swipes?.length == 0) {
+			await retrieve_repositories();
+		} else {
+			await retrieve_next_project_group();
+		}
 	}
 };
