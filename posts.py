@@ -170,7 +170,7 @@ def request_github_projects(
 
         # Determine whether or not this project has been seen already
         if all_swipes:
-            if repository.id not in all_swipes:
+            if str(repository.id) not in all_swipes:
                 # Add current object to the finalized list
                 open_source_utilizer.open_source_list.append(open_source_project)
         else:

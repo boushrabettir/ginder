@@ -14,43 +14,33 @@
   let is_data_loaded = false;
   
   /**
+   * local_storage_get_and_set is a helper function
+   * to get/set local storage data
+  */
+  const local_storage_get_and_set = (local_name: string) => {
+    
+    if (localStorage.getItem(local_name) == null || localStorage.getItem(local_name) == undefined) {
+      localStorage.setItem(local_name, JSON.stringify([curr]));
+    } else {
+      let right_swipe_data = JSON.parse(localStorage.getItem(local_name) || "[]");
+      right_swipe_data.push(curr);
+      localStorage.setItem(local_name, JSON.stringify(right_swipe_data));  
+    }
+  };
+
+  /**
    * right adds the next data object to the right swipes
    * for the reccomendation system and retrieves the next block
    */
-
-   //TODO Update so it doesnt appropriate DRY.
   const right = async () => {
-
-    if (localStorage.getItem("all") == null || localStorage.getItem("all") == undefined) {
-      localStorage.setItem("all", JSON.stringify([curr]));
-    } else {
-      let right_swipe_data = JSON.parse(localStorage.getItem("all") || "[]");
-      right_swipe_data.push(curr);
-      localStorage.setItem("all", JSON.stringify(right_swipe_data));
-      
-    }
-
-    if (localStorage.getItem("stars") == null || localStorage.getItem("stars") == undefined) {
-      localStorage.setItem("stars", JSON.stringify([curr]));
-    } else {
-      let right_swipe_data = JSON.parse(localStorage.getItem("stars") || "[]");
-      right_swipe_data.push(curr);
-      localStorage.setItem("stars", JSON.stringify(right_swipe_data));
-      
-    }
+ 
+    local_storage_get_and_set("all");
+    local_storage_get_and_set("stars");
 
     // Adds projects to stars list on Github profile
     await add_project_to_stars();
 
-
-    if (localStorage.getItem("right-swipes") == undefined || localStorage.getItem("right-swipes") == null) {
-      localStorage.setItem("right-swipes", JSON.stringify([curr]));
-      
-    } else {
-      let right_swipe_data = JSON.parse(localStorage.getItem("right-swipes") || "[]");
-      right_swipe_data.push(curr);
-      localStorage.setItem("right-swipes", JSON.stringify(right_swipe_data));
-    }
+    local_storage_get_and_set("right-swipes");
 
     curr = pop_new_project();
   
@@ -61,24 +51,13 @@
       await determine_next_step();
     }
 
-    
-    
-  }
+  };
 
   /**
    * left retrieves the next data block
    */
   const left = async () => {
-    
-    if (localStorage.getItem("all") == null || localStorage.getItem("all") == undefined) {
-      localStorage.setItem("all", JSON.stringify([curr]));
-    } else {
-      let right_swipe_data = JSON.parse(localStorage.getItem("all") || "[]");
-      right_swipe_data.push(curr);
-      localStorage.setItem("all", JSON.stringify(right_swipe_data));
-      
-    }
-
+    local_storage_get_and_set("all");
     curr = pop_new_project();
     await determine_next_step();
   }
@@ -90,13 +69,17 @@
   
 
   onMount(async () => {
+
     await local_storage_hold();
 
-    await retrieve_user_data();
+    if (JSON.parse(localStorage.getItem("user-data") || "{}").length == 0) {
+      await retrieve_user_data();
+    }
+    
     
     const unsuscribe = user_data.subscribe((v: any) => {
       data_user = v;
-      is_data_loaded=true;
+      is_data_loaded = true;
     });
 
     curr = pop_new_project();
@@ -152,7 +135,9 @@
       <p class="text-center text-sky-300 text-sm">{final_response}</p>
       
     {:else}
-      <Loading />
+      <div class="blurry-bg">
+        <Loading />
+      </div>
     {/if}
 
 
@@ -167,13 +152,42 @@
       padding: 0;
   }
 
+  @keyframes movingGradient {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+              background-position: 0% 0%;
+            }
+        }
+
+  /* Apply the animation to the body */
   body {
-      background: linear-gradient(to bottom right, #11111b, #3d3d43, #171721);
+      animation: movingGradient 25s linear infinite;
+      background: linear-gradient(to bottom right, #0a0a0f, #3d3d43, #0a0a11);
+      background-size: 200% 200%; /* Control the gradient movement speed */
   }
+
   
   * {
     font-family: "Poppins", sans-serif;  
   }
+
+
+  .blurry-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(0.3rem); /* No blur initially */
+  
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Make sure it's above other content */
+}
  
 </style>
 
