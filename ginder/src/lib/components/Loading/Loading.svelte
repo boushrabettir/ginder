@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 
-<div class="m-auto container flex justify-center items-center mt-24">
-    <div class="bg-zinc-200 rounded-md text-center p-10 absolute z-10 center ml-5 mr-5">
+<div class="m-auto container flex justify-center items-center mt-28">
+    <div class="bg-zinc-200 rounded-md text-center p-10 absolute z-10 center ml-7 mr-7">
         <h1 class="text-5xl font-bold tracking-wide text-red-800">HOLD UP!!!</h1>
         <p class="text-2xl mt-5 mb-5">We’re preparing a <span class="text-sky-400 italic">new batch</span> of projects just for you! Grab a cup of coffee, sit back, and unwind. Let us handle the heavy lifting for you. ☕🌟</p>
         <p class="text-sm italic">Once we’re ready this pop up will vanish!</p>
@@ -27,7 +27,6 @@
 .container {
     animation: bounce 4s infinite;
     height: 80vh;
-    
 }
 
 @keyframes bounce {

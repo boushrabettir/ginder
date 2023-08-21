@@ -2,7 +2,8 @@ from dataclasses import dataclass
 from typing import List
 from github import Github, Auth
 import random
-
+import requests
+import json
 
 # Holds the max amount of languages
 MAX_LANGUAGE_LENGTH = 3
@@ -20,6 +21,9 @@ class OpenSource:
 
     # Name of repository
     name: str
+
+    # Profile picture link
+    pfp_link: str
 
     # Description
     description: str
@@ -116,9 +120,20 @@ def retrieve_top_repo_languages(repository) -> List[str]:
     all_languages = sorted(
         languages_data.keys(), key=lambda x: languages_data[x], reverse=True
     )
-    all_languages = all_languages[:3]
 
-    return all_languages
+    return all_languages[:3]
+
+
+def request_github_pfp(headers: dict, username: str) -> str:
+    """Retrieves users Github profile picture link"""
+
+    response = requests.get(f"https://api.github.com/user/{username}", headers=headers)
+
+    try:
+        json_response = response.json()
+        return json_response["avatar_url"]
+    except ValueError as e:
+        return json({"error": "Invalid response, please try again."}), 500
 
 
 def request_github_projects(
@@ -145,6 +160,9 @@ def request_github_projects(
     for repository in repositories:
         id = repository.id
         name = repository.name
+        pfp_link = request_github_pfp(
+            {"Authorization": f"Bearer {auth_token}"}, repository.owner.login
+        )
         description = repository.description
         link = repository.html_url
         username = repository.owner.login
@@ -158,6 +176,7 @@ def request_github_projects(
         open_source_project = OpenSource(
             id,
             name,
+            pfp_link,
             description,
             link,
             username,

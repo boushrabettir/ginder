@@ -72,9 +72,9 @@
 
     await local_storage_hold();
 
-    if (JSON.parse(localStorage.getItem("user-data") || "{}").length == 0) {
-      await retrieve_user_data();
-    }
+
+    await retrieve_user_data();
+  
     
     
     const unsuscribe = user_data.subscribe((v: any) => {
@@ -126,8 +126,8 @@
         contributers={curr["contributers"]}
         link={curr["link"]}
       />
-
-      <div class="flex justify-center text-white gap-20 text-3xl mt-5 font-bold">
+      
+      <div class="flex justify-center text-white gap-20 text-3xl mt-24 font-bold">
         <button on:click={left}>{'<'}</button>
         <button on:click={right}>{'>'}</button>
       </div>
@@ -184,7 +184,6 @@
     width: 100%;
     height: 100%;
     backdrop-filter: blur(0.3rem); /* No blur initially */
-  
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000; /* Make sure it's above other content */
 }

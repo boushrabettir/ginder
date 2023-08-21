@@ -67,8 +67,7 @@ def get_data() -> List[Dict[str, any]] | None:
     try:
         return response.json()
     except ValueError as e:
-        print(f"Decoding error: {e}")
-        return jsonify({"error": "Invalid response, please try again."}), 500
+        return jsonify({"error": f"Invalid response, please try again. {e}"}), 500
 
 
 @app.route("/get_projects", methods=["POST", "GET"])
