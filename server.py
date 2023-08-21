@@ -90,6 +90,7 @@ def get_projects():
         {
             "id": data.id,
             "name": data.name,
+            "profile_picture": data.pfp_link,
             "desc": data.description,
             "link": data.link,
             "username": data.username,
@@ -128,6 +129,7 @@ def get_next_group():
         {
             "id": data.id,
             "name": data.name,
+            "profile_picture": data.pfp_link,
             "desc": data.description,
             "link": data.link,
             "username": data.username,

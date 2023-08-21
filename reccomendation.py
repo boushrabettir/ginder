@@ -1,9 +1,9 @@
-import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from posts import OpenSource, OpenSourceUtilizer, request_github_projects
 from typing import List
 import utils as ut
+import json
 
 
 def compute_cosine_similarity(right_swipes: List[object]) -> object:
@@ -12,7 +12,8 @@ def compute_cosine_similarity(right_swipes: List[object]) -> object:
     # Holds desciption for each project
     description_holder = []
 
-    in_session_right_swipes = eval(right_swipes)
+    print(right_swipes, json.loads(right_swipes))
+    in_session_right_swipes = json.loads(right_swipes)
 
     for project in in_session_right_swipes:
         description_holder.append(project["desc"])

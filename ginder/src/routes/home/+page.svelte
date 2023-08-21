@@ -97,7 +97,7 @@
     <title>ginder</title>
   </head>
 
-  <body>
+  <body class="selection:bg-sky-300 selection:text-sky-700">
     <div class="text-white flex justify-between items-center ml-14 mr-14">
       <h1 class="flex items-center gap-0">
           <span class="text-3xl">ginder |</span>        
@@ -125,6 +125,7 @@
         forks={curr["forks"]}
         contributers={curr["contributers"]}
         link={curr["link"]}
+        pfp_photo={curr["profile_picture"]}
       />
       
       <div class="flex justify-center text-white gap-20 text-3xl mt-24 font-bold">

@@ -127,13 +127,14 @@ def retrieve_top_repo_languages(repository) -> List[str]:
 def request_github_pfp(headers: dict, username: str) -> str:
     """Retrieves users Github profile picture link"""
 
-    response = requests.get(f"https://api.github.com/user/{username}", headers=headers)
-
+    response = requests.get(f"https://api.github.com/users/{username}", headers=headers)
+    print(response)
     try:
         json_response = response.json()
+        print(json_response)
         return json_response["avatar_url"]
     except ValueError as e:
-        return json({"error": "Invalid response, please try again."}), 500
+        return json({"error": f"Invalid response, please try again. {e}"}), 500
 
 
 def request_github_projects(

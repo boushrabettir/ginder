@@ -12,6 +12,7 @@
     export let forks: number;
     export let contributers: number;
     export let link: string;
+    export let pfp_photo: string;
 
 
 
@@ -33,7 +34,7 @@
 
 <div class="flex items-center justify-center mt-24">
 <div class="scale-125 pb-5 w-96 shadow-2xl rounded-md mx-auto rounded-md text-slate-200 text-center ">
-    <img src="./photos/github.png" alt="Placeholder" class=" flex justify-center rounded-t-lg">
+    <img src={pfp_photo} alt="Placeholder" class=" flex justify-center rounded-t-lg">
     <p class="text-slate-950 text-center inline-block text-xs align-middle absolute z-10 left-1/2 top-4 bg-neutral-900 text-white p-2 rounded-full -translate-x-1/2 w-max shadow-xl">
       {username} • <span class="font-bold">Followers:</span> {format_large_numbers(followers)}
     </p>
