@@ -30,7 +30,7 @@
         <p class="border-b-2 border-neutral-600"></p>
         <p class="mt-2 text-xs">
           🔤 Languages: Rust, TypeScript<br/>
-          ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Commits: 39
+          ⭐ Stargazers: 12.1k • 📥  Forks: 235 • 📝 Contributers: 39
         </p>
         <button class="pointer-events-none rounded-md text-xs text-slate-950 bg-sky-200 pl-6 pr-6 pt-1 pb-1 mb-3 mt-2">
             View Here!
