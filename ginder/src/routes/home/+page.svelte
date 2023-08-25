@@ -44,12 +44,12 @@
 
     curr = pop_new_project();
   
-    // Determines whether or not new data should be added into the list 
-    if (JSON.parse(localStorage.getItem("right-swipes") || "[]")?.length === 5) {
-      retrieve_next_project_group();
-    } else {
-      await determine_next_step();
-    }
+    // // Determines whether or not new data should be added into the list 
+    // if (JSON.parse(localStorage.getItem("right-swipes") || "[]")?.length === 5) {
+    //   retrieve_next_project_group();
+    // } else {
+    //   await determine_next_step();
+    // }
 
   };
 
@@ -59,7 +59,7 @@
   const left = async () => {
     local_storage_get_and_set("all");
     curr = pop_new_project();
-    await determine_next_step();
+    // await determine_next_step();
   }
   
 
