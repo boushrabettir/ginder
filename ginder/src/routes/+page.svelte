@@ -44,9 +44,10 @@
         </div>
             
         <Post />
+    
     </div>
 
-    <p class = "text-center uppercase text-sky-300 mb-2 ">Created and maintained with 💙 by @boushrabettir</p>
+    
 </body>
 </html>
 
