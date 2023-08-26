@@ -27,7 +27,9 @@ export const local_storage_hold = async () => {
 			// Retrieve OAuth token
 
 			try {
-				let response = await fetch(`http://127.0.0.1:5000/get_token?code=${param}`);
+				let response = await fetch(
+					`https://ginder-backend-6059b9ee6ed5.herokuapp.com/get_token?code=${param}`
+				);
 
 				if (response.ok) {
 					// Retrieve the access token text
