@@ -8,7 +8,7 @@ export let curr_project: Object = {};
  */
 export const retrieve_repositories = async (): Promise<Object[]> => {
 	try {
-		let response = await fetch('http://127.0.0.1:5000/get_projects', {
+		let response = await fetch('https://ginder-backend-6059b9ee6ed5.herokuapp.com/get_projects', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export const retrieve_repositories = async (): Promise<Object[]> => {
  */
 export const retrieve_languages = async (): Promise<string[]> => {
 	try {
-		let response = await fetch('http://127.0.0.1:5000/get_projects');
+		let response = await fetch('https://ginder-backend-6059b9ee6ed5.herokuapp.com/get_projects');
 
 		if (response.ok) {
 			let data = await response.json();
@@ -65,7 +65,7 @@ export const retrieve_next_project_group = async () => {
 	let next_group: Object[] = [];
 
 	try {
-		let response = await fetch('http://127.0.0.1:5000/get_next_group', {
+		let response = await fetch('https://ginder-backend-6059b9ee6ed5.herokuapp.com/get_next_group', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ export const retrieve_next_project_group = async () => {
  */
 export const add_project_to_stars = async () => {
 	try {
-		let response = await fetch('http://127.0.0.1:5000/add_to_stars', {
+		let response = await fetch('https://ginder-backend-6059b9ee6ed5.herokuapp.com/add_to_stars', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
