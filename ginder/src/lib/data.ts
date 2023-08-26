@@ -54,12 +54,15 @@ export const local_storage_hold = async () => {
  */
 export const retrieve_user_data = async () => {
 	try {
-		const response = await fetch('http://127.0.0.1:5000/get_user_data', {
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+		const response = await fetch(
+			'https://ginder-backend-6059b9ee6ed5.herokuapp.com/get_user_data',
+			{
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
 			}
-		});
+		);
 
 		if (response.ok) {
 			// Convert response text to JSON object directly
