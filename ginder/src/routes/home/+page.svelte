@@ -163,13 +163,12 @@
             100% {
               background-position: 0% 0%;
             }
-        }
+    }
 
-  /* Apply the animation to the body */
   body {
       animation: movingGradient 25s linear infinite;
       background: linear-gradient(to bottom right, #0a0a0f, #3d3d43, #0a0a11);
-      background-size: 200% 200%; /* Control the gradient movement speed */
+      background-size: 200% 200%; 
   }
 
   
@@ -177,17 +176,15 @@
     font-family: "Poppins", sans-serif;  
   }
 
-
   .blurry-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(0.3rem); /* No blur initially */
+    backdrop-filter: blur(0.3rem);
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000; /* Make sure it's above other content */
-}
+    z-index: 1000;
  
 </style>
 

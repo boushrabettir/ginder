@@ -53,11 +53,25 @@
 
 
 <style type="postcss">
-:global(body) {
-    background: linear-gradient(to bottom right, #11111b, #383843, #171721);
-    height: 100%;
-    padding: 0;
-}
+
+
+@keyframes movingGradient {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+              background-position: 0% 0%;
+            }
+    }
+
+  body {
+      animation: movingGradient 25s linear infinite;
+      background: linear-gradient(to bottom right, #0a0a0f, #3d3d43, #0a0a11);
+      background-size: 200% 200%; 
+  }
 
 * {
     font-family: "Poppins", sans-serif;
